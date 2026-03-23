@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>iPhone 17 | ความมหัศจรรย์ที่สัมผัสได้</title>
+  
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Sarabun:wght@400;600&display=swap" rel="stylesheet">
+
+  <style>
+    /* 1. RESET & BASE STYLES - ปรับพื้นฐานหน้าเว็บ */
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+
+    body {
+        font-family: 'Inter', 'Sarabun', -apple-system, sans-serif;
+        background-color: #fbfbfd;
+        color: #1d1d1f;
+        line-height: 1.5;
+        overflow-x: hidden;
+        -webkit-font-smoothing: antialiased; /* ทำให้ตัวอักษรคมชัดขึ้น */
+    }
+
+    a { text-decoration: none; color: inherit; transition: opacity 0.3s; }
+    a:hover { opacity: 0.7; }
+
+    /* 2. NAVBAR STYLE - แถบเมนูโปร่งแสงและเบลอ */
+    .navbar {
+        position: fixed;
+        top: 0;
+        width: 100%;
+        height: 48px;
+        background: rgba(251, 251, 253, 0.8);
+        backdrop-filter: blur(20px);
+        -webkit-backdrop-filter: blur(20px);
+        z-index: 9999;
+        display: flex;
+        justify-content: center;
+        border-bottom: 1px solid rgba(0,0,0,0.05);
+    }
+
+    .nav-content {
+        width: 100%;
+        max-width: 1024px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 0 22px;
+    }
+
+    .logo { font-weight: 600; font-size: 19px; }
+
+    .menu { display: flex; gap: 30px; }
+    .menu a { font-size: 12px; opacity: 0.8; }
+
+    /* 3. HERO SECTION - ส่วนบนสุดของหน้า */
+    .hero {
+        min-height: 100vh;
+        padding-top: 100px;
+        display: flex;
+        justify-content: center;
+        text-align: center;
+        background-color: #ffffff;
+    }
+
+    .hero-container {
+        width: 100%;
+        max-width: 980px;
+        padding: 0 20px;
+    }
+
+    /* ชื่อรุ่น */
+    .model-name {
+        font-size: 24px;
+        font-weight: 600;
+        margin-bottom: 12px;
+    }
+
+    /* หัวข้อใหญ่ - ไล่เฉดสีแบบ iPhone 17 (ม่วง-ฟ้า-ชมพู) */
+    .gradient-text {
+        font-size: 72px; /* ขนาดใหญ่พิเศษ */
+        font-weight: 700;
+        line-height: 1.05;
+        letter-spacing: -0.015em;
+        background: linear-gradient(135deg, #a88beb 0%, #7d97f4 50%, #f1a7f1 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        color: transparent;
+        margin-bottom: 20px;
+    }
+
+    /* 4. HERO IMAGE - การจัดวางรูปภาพ */
+    .hero-image-container {
+        margin: 50px auto;
+        display: flex;
+        justify-content: center;
+        position: relative;
+    }
+
+    .hero-img {
+        max-width: 85%;
+        height: auto;
+        /* เพิ่มเงาจางๆ และภาพซ้อนให้ดูมีมิติ */
+        filter: drop-shadow(0 30px 60px rgba(0,0,0,0.12));
+    }
+
+    /* 5. CTA SECTION - ปุ่มราคาและเรียนรู้เพิ่มเติม */
+    .cta-section {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 25px;
+        margin-top: -10px;
+    }
+
+    /* ปุ่มราคาแบบแคปซูล (สไตล์ใหม่ล่าสุดของ Apple) */
+    .price-capsule {
+        background: #f5f5f7;
+        padding: 9px 9px 9px 26px;
+        border-radius: 40px;
+        display: flex;
+        align-items: center;
+        gap: 18px;
+        font-size: 17px;
+        border: 1px solid rgba(0,0,0,0.03);
+    }
+
+    .buy-btn {
+        background-color: #0071e3;
+        color: white;
+        border: none;
+        padding: 9px 22px;
+        border-radius: 20px;
+        font-weight: 600;
+        font-size: 15px;
+        cursor: pointer;
+        transition: background 0.2s, transform 0.1s;
+    }
+
+    .buy-btn:hover { background-color: #0077ed; }
+    .buy-btn:active { transform: scale(0.97); }
+
+    .learn-more {
+        color: #0066cc;
+        font-size: 19px;
+    }
+    .learn-more:hover { text-decoration: underline; }
+
+    /* 6. DETAILS SECTION - ส่วนที่ 2 เพื่อให้เลื่อนหน้าจอได้ */
+    .details {
+        padding: 120px 20px;
+        background-color: #fbfbfd;
+        text-align: center;
+    }
+
+    .details h2 {
+        font-size: clamp(40px, 6vw, 56px);
+        font-weight: 700;
+        max-width: 800px;
+        margin: 0 auto 30px auto;
+        line-height: 1.1;
+    }
+
+    .details p {
+        font-size: 24px;
+        color: #6e6e73;
+        max-width: 600px;
+        margin: 0 auto;
+    }
+
+    /* การปรับแต่งสำหรับหน้าจอมือถือ */
+    @media (max-width: 734px) {
+        .gradient-text { font-size: 48px; }
+        .hero-img { max-width: 100%; }
+        .menu { display: none; } /* ซ่อนเมนูบนมือถือ */
+    }
+  </style>
+</head>
+<body>
+
+  <nav class="navbar">
+    <div class="nav-content">
+      <div class="logo">MySite</div>
+      <div class="menu">
+            <a href="index.html">Home</a>
+            <a href="about.html">CV</a>
+            <a href="app.html">App</a>
+        </div>
+    </div>
+  </nav>
+
+  <main>
+    <section class="hero">
+      <div class="hero-container">
+        <p class="model-name">iPhone 17</p>
+        <h1 class="gradient-text">สุดมหัศจรรย์<br>สุดสดใส</h1>
+        
+        <div class="hero-image-container">
+          <img src="images/phone.png" alt="iPhone 17" class="hero-img">
+        </div>
+
+        <div class="cta-section">
+          <div class="price-capsule">
+             <span>เริ่มต้นที่ ฿29,900</span>
+             <button class="buy-btn">ซื้อ</button>
+          </div>
+          <a href="#" class="learn-more">เรียนรู้เพิ่มเติม ></a>
+        </div>
+      </div>
+    </section>
+
+    <section class="details">
+        <h2>ดีไซน์ที่ล้ำสมัย<br>ในทุกรายละเอียด</h2>
+        <p>สร้างสรรค์ขึ้นเพื่อความทนทานและสวยงาม</p>
+    </section>
+  </main>
+
+</body>
+</html>
