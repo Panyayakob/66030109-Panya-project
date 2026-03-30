@@ -17,18 +17,18 @@
 
         body {
             font-family: 'Inter', 'Sarabun', sans-serif;
-            background-color: #000; /* พื้นหลังดำสนิทแบบหน้า Home */
+            background-color: #000;
             color: #fff;
             line-height: 1.6;
-            padding-top: 100px;
+            padding-top: 120px; /* เว้นที่ให้ Navbar มากขึ้นเพื่อให้เนื้อหาไม่จม */
         }
 
-        /* 2. NAVBAR - สไตล์เดียวกับหน้า Home และ App */
+        /* 2. NAVBAR - ปรับให้ตรงกับหน้า Home และ App เป๊ะๆ */
         .navbar {
             position: fixed;
             top: 0;
             width: 100%;
-            height: 80px;
+            height: 70px; /* ปรับเหลือ 70px ตามหน้า Home */
             display: flex;
             justify-content: center;
             z-index: 9999;
@@ -46,13 +46,24 @@
             padding: 0 40px;
         }
 
-        .logo { font-size: 20px; font-weight: 700; letter-spacing: 2px; color: #fff; text-decoration: none; }
+        .logo { 
+            font-size: 20px; 
+            font-weight: 700; 
+            letter-spacing: 2px; 
+            color: #fff; 
+            text-decoration: none; 
+        }
+
+        /* ใช้ Flex และ Gap: 30px ให้เท่ากับทุกหน้า */
+        .menu {
+            display: flex;
+            gap: 30px;
+        }
 
         .menu a { 
             text-decoration: none; 
             color: rgba(255,255,255,0.7); 
             font-size: 13px; 
-            margin-left: 30px;
             text-transform: uppercase;
             letter-spacing: 1px;
             transition: 0.3s;
@@ -71,7 +82,6 @@
             margin-bottom: 60px;
         }
 
-        /* รูปโปรไฟล์แบบวงกลม มีขอบเรืองแสงบางๆ */
         .profile-img {
             width: 150px;
             height: 150px;
@@ -95,9 +105,9 @@
             -webkit-text-fill-color: transparent;
         }
 
-        /* 4. CV CARD STYLE - ปรับให้ดูแพงแบบ Dark Mode */
+        /* 4. CV CARD STYLE */
         .cv-card {
-            background: #0a0a0a; /* สีเทาเข้มเกือบดำ */
+            background: #0a0a0a;
             border-radius: 15px;
             padding: 35px;
             margin-bottom: 25px;
@@ -154,7 +164,6 @@
             color: #fff;
         }
 
-        /* Back Button */
         .back-home {
             display: inline-block;
             margin: 40px 0 80px 0;
@@ -188,7 +197,7 @@
     <main class="cv-container">
         
         <header class="profile-header">
-            <img src="images\panyayakob.png" alt="Panya" class="profile-img" onerror="this.src='https://via.placeholder.com/150/222/fff?text=Panya'">
+            <img src="images/panyayakob.png" alt="Panya" class="profile-img" onerror="this.src='https://via.placeholder.com/150/222/fff?text=Panya'">
             
             <h1>Curriculum <span class="gradient-name">Vitae</span></h1>
             <p style="color: #555; letter-spacing: 2px; text-transform: uppercase; font-size: 14px;">Personal Profile & Experience</p>

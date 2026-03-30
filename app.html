@@ -3,32 +3,23 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Memory Game | Panya Portfolio</title>
-    
+    <title>Memory Game | Panya</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;700&family=Sarabun:wght@200;400&display=swap" rel="stylesheet">
-
     <style>
-        /* 1. RESET & DARK THEME - ให้เข้ากับหน้า Home */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
+        * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
             font-family: 'Inter', 'Sarabun', sans-serif;
-            background-color: #000; /* พื้นหลังดำสนิท */
+            background-color: #000;
             color: #fff;
-            overflow-x: hidden;
-            padding-top: 100px;
+            padding-top: 120px; /* เว้นที่ให้ Navbar และ Header */
         }
 
-        /* 2. NAVBAR - สไตล์เดียวกับหน้า Home */
+        /* --- NAVBAR: ต้องเหมือนหน้า Home เป๊ะๆ --- */
         .navbar {
             position: fixed;
             top: 0;
             width: 100%;
-            height: 80px;
+            height: 70px;
             display: flex;
             justify-content: center;
             z-index: 1000;
@@ -36,7 +27,6 @@
             backdrop-filter: blur(10px);
             border-bottom: 1px solid rgba(255,255,255,0.1);
         }
-
         .nav-content {
             width: 100%;
             max-width: 1200px;
@@ -45,116 +35,51 @@
             align-items: center;
             padding: 0 40px;
         }
-
         .logo { font-size: 20px; font-weight: 700; letter-spacing: 2px; color: #fff; text-decoration: none; }
-
-        .menu a { 
-            text-decoration: none; 
-            color: rgba(255,255,255,0.7); 
-            font-size: 13px; 
-            margin-left: 30px;
+        .menu { display: flex; gap: 30px; }
+        .menu a {
+            text-decoration: none;
+            color: rgba(255,255,255,0.7);
+            font-size: 13px;
             text-transform: uppercase;
+            letter-spacing: 1px;
             transition: 0.3s;
         }
         .menu a:hover { color: #fff; }
 
-        /* 3. GAME HEADER */
-        .header-section {
-            text-align: center;
-            margin-bottom: 50px;
-        }
+        /* --- GAME STYLES --- */
+        .header-section { text-align: center; margin-bottom: 40px; }
+        .gradient-title { font-size: 40px; font-weight: 300; margin-bottom: 10px; }
+        .subtitle { font-size: 14px; text-transform: uppercase; letter-spacing: 5px; color: #666; }
 
-        .gradient-title {
-            font-size: clamp(32px, 5vw, 48px);
-            font-weight: 300;
-            letter-spacing: -1px;
-            margin-bottom: 10px;
-        }
-
-        .subtitle {
-            font-size: 14px;
-            text-transform: uppercase;
-            letter-spacing: 5px;
-            color: #666;
-        }
-
-        /* 4. GAME BOARD - ปรับ Card ให้ดู Premium ขึ้น */
         .game-board {
             display: grid;
             grid-template-columns: repeat(4, 85px);
             gap: 15px;
             justify-content: center;
-            margin: 0 auto 40px auto;
+            margin-bottom: 40px;
         }
-
         .card {
-            width: 85px;
-            height: 85px;
-            background: #1a1a1a; /* การ์ดสีเทาเข้ม */
-            color: #fff;
-            font-size: 32px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border-radius: 12px;
-            cursor: pointer;
-            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            border: 1px solid rgba(255,255,255,0.1);
-            user-select: none;
+            width: 85px; height: 85px; background: #1a1a1a;
+            color: #fff; font-size: 32px; display: flex;
+            align-items: center; justify-content: center;
+            border-radius: 12px; cursor: pointer;
+            transition: 0.4s; border: 1px solid rgba(255,255,255,0.1);
         }
-
-        .card:hover {
-            transform: translateY(-5px);
-            border-color: rgba(255,255,255,0.4);
-            background: #252525;
-        }
-
-        .card.flipped {
-            background: #333;
-            transform: rotateY(180deg);
-        }
-
-        .card.matched {
-            background: rgba(255, 255, 255, 0.1);
-            color: #fff;
-            border-color: #fff;
-            cursor: default;
-            transform: scale(0.9);
-            opacity: 0.5;
-        }
-
-        /* 5. RESET BUTTON - ปุ่มแบบ Minimal */
-        .reset-container {
-            text-align: center;
-            padding-bottom: 100px;
-        }
+        .card.flipped { background: #333; transform: rotateY(180deg); }
+        .card.matched { background: rgba(255, 255, 255, 0.1); opacity: 0.5; border-color: #fff; }
 
         .btn-reset {
-            background: transparent;
-            color: #fff;
-            border: 1px solid #fff;
-            padding: 12px 30px;
-            border-radius: 2px;
-            font-size: 12px;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            cursor: pointer;
-            transition: 0.3s;
+            display: block; margin: 0 auto;
+            background: transparent; color: #fff;
+            border: 1px solid #fff; padding: 12px 30px;
+            text-transform: uppercase; letter-spacing: 2px;
+            font-size: 12px; cursor: pointer; transition: 0.3s;
         }
-
-        .btn-reset:hover {
-            background: #fff;
-            color: #000;
-        }
-
-        @media (max-width: 480px) {
-            .game-board { grid-template-columns: repeat(4, 75px); gap: 10px; }
-            .card { width: 75px; height: 75px; }
-        }
+        .btn-reset:hover { background: #fff; color: #000; }
     </style>
 </head>
 <body>
-
     <nav class="navbar">
         <div class="nav-content">
             <a href="index.html" class="logo">PANYA</a>
@@ -162,90 +87,50 @@
                 <a href="index.html">Home</a>
                 <a href="index.html#about">About</a>
                 <a href="app.html">App</a>
-                <a href="about.html">CV</a>
+                <a href="about.html">Full CV</a>
             </div>
         </div>
     </nav>
-
     <main>
         <section class="header-section">
             <h1 class="gradient-title">Memory Game</h1>
             <p class="subtitle">ฝึกสมองในสไตล์มินิมอล</p>
         </section>
-
         <div class="game-board" id="board"></div>
-
-        <div class="reset-container">
-            <button class="btn-reset" onclick="initGame()">เริ่มเกมใหม่</button>
-        </div>
+        <button class="btn-reset" onclick="initGame()">เริ่มเกมใหม่</button>
     </main>
-
     <script>
+        /* JavaScript ชุดเดิมของคุณ */
         const symbols = ["🍎","🍌","🍇","🍒","🍉","🍍","🥝","🍓"];
-        let cards = [];
-        let firstCard = null;
-        let secondCard = null;
-        let lock = false;
-
+        let cards = []; let firstCard = null; let secondCard = null; let lock = false;
         const board = document.getElementById("board");
-
         function initGame() {
-            // ล้างบอร์ดเก่า
-            board.innerHTML = "";
-            firstCard = null;
-            secondCard = null;
-            lock = false;
-
-            // สุ่มการ์ดใหม่
-            cards = [...symbols, ...symbols];
-            cards.sort(() => 0.5 - Math.random());
-
+            board.innerHTML = ""; firstCard = null; secondCard = null; lock = false;
+            cards = [...symbols, ...symbols].sort(() => 0.5 - Math.random());
             cards.forEach(symbol => {
                 const card = document.createElement("div");
                 card.classList.add("card");
-                card.dataset.symbol = symbol;
                 card.innerText = "?";
                 card.addEventListener("click", () => flipCard(card, symbol));
                 board.appendChild(card);
             });
         }
-
         function flipCard(card, symbol) {
             if (lock || card.classList.contains("flipped") || card.classList.contains("matched")) return;
-
-            card.innerText = symbol;
-            card.classList.add("flipped");
-
-            if (!firstCard) {
-                firstCard = card;
-                return;
-            }
-
-            secondCard = card;
-            lock = true;
-
-            if (firstCard.dataset.symbol === secondCard.dataset.symbol) {
-                firstCard.classList.add("matched");
-                secondCard.classList.add("matched");
-                resetSelection();
+            card.innerText = symbol; card.classList.add("flipped");
+            if (!firstCard) { firstCard = card; return; }
+            secondCard = card; lock = true;
+            if (firstCard.dataset.symbol === secondCard.dataset.symbol || firstCard.innerText === secondCard.innerText) {
+                firstCard.classList.add("matched"); secondCard.classList.add("matched");
+                firstCard = null; secondCard = null; lock = false;
             } else {
                 setTimeout(() => {
-                    firstCard.innerText = "?";
-                    secondCard.innerText = "?";
-                    firstCard.classList.remove("flipped");
-                    secondCard.classList.remove("flipped");
-                    resetSelection();
+                    firstCard.innerText = "?"; secondCard.innerText = "?";
+                    firstCard.classList.remove("flipped"); secondCard.classList.remove("flipped");
+                    firstCard = null; secondCard = null; lock = false;
                 }, 600);
             }
         }
-
-        function resetSelection() {
-            firstCard = null;
-            secondCard = null;
-            lock = false;
-        }
-
-        // เริ่มเกมทันทีที่โหลดหน้า
         initGame();
     </script>
 </body>
