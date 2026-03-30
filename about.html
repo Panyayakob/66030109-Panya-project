@@ -21,7 +21,173 @@
             color: #1d1d1f;
             line-height: 1.6;
             padding-top: 80px;
-        }
+        }<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CV | Panya</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Sarabun:wght@400;600&display=swap" rel="stylesheet">
+
+<style>
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Inter','Sarabun',sans-serif;
+  background: #f5f5f7;
+  color: #1d1d1f;
+  padding-top: 80px;
+}
+
+/* NAVBAR */
+.navbar {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  height: 48px;
+  background: rgba(251,251,253,0.8);
+  backdrop-filter: blur(20px);
+  display: flex;
+  justify-content: center;
+  border-bottom: 1px solid rgba(0,0,0,0.05);
+}
+
+.nav-content {
+  width: 100%;
+  max-width: 1024px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 22px;
+}
+
+.menu a {
+  margin-left: 20px;
+  text-decoration: none;
+  color: #1d1d1f;
+  font-size: 13px;
+}
+
+/* CONTAINER */
+.cv-container {
+  max-width: 800px;
+  margin: auto;
+  padding: 20px;
+}
+
+/* PROFILE */
+.profile-header {
+  text-align: center;
+  margin-bottom: 40px;
+}
+
+/* 🔥 รูปโปรไฟล์ */
+.profile-img {
+  width: 140px;
+  height: 140px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-bottom: 20px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+}
+
+.profile-header h1 {
+  font-size: 42px;
+  font-weight: 700;
+}
+
+.gradient-name {
+  background: linear-gradient(135deg,#a88beb,#7d97f4,#f1a7f1);
+  -webkit-background-clip: text;
+  color: transparent;
+}
+
+/* CARD */
+.cv-card {
+  background: white;
+  border-radius: 20px;
+  padding: 25px;
+  margin-bottom: 20px;
+  box-shadow: 0 5px 20px rgba(0,0,0,0.05);
+}
+
+.section-title {
+  font-size: 13px;
+  color: #86868b;
+  margin-bottom: 10px;
+}
+
+.info-text {
+  font-size: 18px;
+  margin-bottom: 5px;
+}
+
+/* SKILL */
+.skills {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.skill {
+  background: #f5f5f7;
+  padding: 8px 15px;
+  border-radius: 20px;
+  font-size: 14px;
+}
+
+</style>
+</head>
+
+<body>
+
+<nav class="navbar">
+  <div class="nav-content">
+    <div><b>MySite</b></div>
+    <div class="menu">
+      <a href="index.html">Home</a>
+      <a href="about.html">CV</a>
+      <a href="app.html">App</a>
+    </div>
+  </div>
+</nav>
+
+<div class="cv-container">
+
+  <div class="profile-header">
+    
+    <!-- ✅ ใส่รูปตรงนี้ -->
+    <img src="images/profile.jpg" class="profile-img">
+
+    <h1>Panya <span class="gradient-name">Yakob</span></h1>
+    <p style="color:#86868b;">Web Developer</p>
+  </div>
+
+  <div class="cv-card">
+    <div class="section-title">การศึกษา</div>
+    <div class="info-text">วิทยาการคอมพิวเตอร์</div>
+    <div style="color:#86868b;">มหาวิทยาลัย...</div>
+  </div>
+
+  <div class="cv-card">
+    <div class="section-title">Skills</div>
+    <div class="skills">
+      <div class="skill">HTML</div>
+      <div class="skill">CSS</div>
+      <div class="skill">JavaScript</div>
+      <div class="skill">UI Design</div>
+    </div>
+  </div>
+
+</div>
+
+</body>
+</html>
 
         /* 2. NAVBAR (แบบที่คุณชอบ) */
         .navbar {

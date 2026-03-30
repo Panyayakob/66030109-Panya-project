@@ -3,11 +3,16 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>สวัสดีครับ | ปัญญา</title>
+  <title>Panya | Portfolio</title>
 
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Sarabun:wght@400;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;700&family=Sarabun:wght@200;400&display=swap" rel="stylesheet">
 
   <style>
+    /* --- 1. SETUP & SMOOTH SCROLL --- */
+    html {
+      scroll-behavior: smooth; /* ทำให้เวลาคลิกเมนูแล้วหน้าจอเลื่อนลงแบบนิ่มๆ */
+    }
+
     * {
       margin: 0;
       padding: 0;
@@ -15,143 +20,188 @@
     }
 
     body {
-      font-family: 'Inter','Sarabun',sans-serif;
-      background: #f5f5f7;
-      color: #1d1d1f;
+      font-family: 'Inter', 'Sarabun', sans-serif;
+      background: #000;
+      color: #fff;
+      line-height: 1.6;
     }
 
-    /* NAVBAR */
+    /* --- 2. NAVBAR (Fixed) --- */
     .navbar {
       position: fixed;
       top: 0;
       width: 100%;
-      height: 50px;
-      background: rgba(255,255,255,0.8);
-      backdrop-filter: blur(10px);
+      height: 70px;
       display: flex;
       justify-content: center;
-      z-index: 999;
+      z-index: 1000;
+      background: rgba(0, 0, 0, 0.8);
+      backdrop-filter: blur(10px); /* เอฟเฟกต์กระจกฝ้าแบบ Apple */
     }
 
     .nav-content {
       width: 100%;
-      max-width: 1000px;
+      max-width: 1200px;
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding: 0 20px;
+      padding: 0 40px;
+    }
+
+    .logo {
+      font-size: 20px;
+      font-weight: 700;
+      letter-spacing: 2px;
+      text-decoration: none;
+      color: #fff;
     }
 
     .menu a {
-      margin-left: 20px;
+      margin-left: 30px;
       text-decoration: none;
-      color: black;
+      color: rgba(255,255,255,0.7);
+      font-size: 13px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      transition: 0.3s;
     }
 
-    /* HERO */
+    .menu a:hover {
+      color: #fff;
+    }
+
+    /* --- 3. HERO SECTION (หน้าแรก) --- */
     .hero {
       height: 100vh;
       display: flex;
       align-items: center;
-      justify-content: center;
-      text-align: center;
-      padding-top: 80px;
+      padding: 0 10%;
+      background: linear-gradient(to right, rgba(0,0,0,0.9), transparent), 
+                  url('https://images.unsplash.com/photo-1498050108023-c5249f4df085?q=80&w=1920'); /* เปลี่ยนเป็นรูปคุณได้ */
+      background-size: cover;
+      background-position: center;
     }
 
-    .hero h1 {
-      font-size: 70px;
-      font-weight: 700;
-      background: linear-gradient(135deg,#a88beb,#7d97f4,#f1a7f1);
-      -webkit-background-clip: text;
-      color: transparent;
+    .hero-content h1 {
+      font-size: clamp(40px, 8vw, 80px);
+      font-weight: 300;
+      margin-bottom: 10px;
     }
 
-    .hero p {
-      margin-top: 15px;
-      font-size: 20px;
-      color: #6e6e73;
+    .hero-content p {
+      font-size: 14px;
+      letter-spacing: 8px;
+      color: #aaa;
+      text-transform: uppercase;
     }
 
-    /* BUTTON */
-    .buttons {
-      margin-top: 30px;
+    /* --- 4. ABOUT SECTION (ส่วนที่เลื่อนลงมาเจอ) --- */
+    .about-section {
+      min-height: 80vh;
+      padding: 120px 10%;
+      background: #0a0a0a; /* ดำเทาๆ ให้ดูต่างจากหน้าแรก */
       display: flex;
-      gap: 15px;
+      flex-direction: column;
       justify-content: center;
     }
 
-    .btn {
-      padding: 12px 25px;
-      border-radius: 25px;
-      border: none;
-      cursor: pointer;
-      font-weight: 600;
+    .about-container {
+      max-width: 900px;
+      margin: 0 auto;
     }
 
-    .btn-primary {
-      background: #0071e3;
-      color: white;
-    }
-
-    .btn-secondary {
-      background: #e5e5ea;
-    }
-
-    .btn:hover {
-      opacity: 0.8;
-    }
-
-    /* SECTION */
-    .section {
-      padding: 100px 20px;
-      text-align: center;
-    }
-
-    .section h2 {
+    .about-section h2 {
       font-size: 40px;
+      font-weight: 300;
+      margin-bottom: 40px;
+      border-left: 4px solid #fff;
+      padding-left: 20px;
+    }
+
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr 2fr;
+      gap: 50px;
+      align-items: start;
+    }
+
+    .about-text p {
+      font-size: 18px;
+      color: #ccc;
       margin-bottom: 20px;
     }
 
-    .section p {
-      color: #6e6e73;
-      font-size: 18px;
+    .skill-tag {
+      display: inline-block;
+      padding: 5px 15px;
+      border: 1px solid #444;
+      margin: 5px;
+      font-size: 12px;
+      border-radius: 20px;
     }
 
+    /* --- 5. FOOTER --- */
+    footer {
+      padding: 50px 10%;
+      text-align: center;
+      border-top: 1px solid #222;
+      font-size: 12px;
+      color: #555;
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      .about-grid { grid-template-columns: 1fr; }
+      .hero { text-align: center; justify-content: center; }
+    }
   </style>
 </head>
-
 <body>
 
-<!-- NAVBAR -->
-<nav class="navbar">
-  <div class="nav-content">
-    <div><b>MySite</b></div>
-    <div class="menu">
-      <a href="index.html">Home</a>
-      <a href="about.html">CV</a>
-      <a href="app.html">App</a>
+  <nav class="navbar">
+    <div class="nav-content">
+      <a href="#" class="logo">PANYA</a>
+      <div class="menu">
+        <a href="#">Home</a>
+        <a href="#about">About</a> <a href="app.html">App</a>
+        <a href="about.html">Full CV</a>
+      </div>
     </div>
-  </div>
-</nav>
+  </nav>
 
-<!-- HERO -->
-<section class="hero">
-  <div>
-    <h1>ผมชื่อปัญญา</h1>
-    <p>นักพัฒนาเว็บไซต์ | Web Developer</p>
-
-    <div class="buttons">
-      <button class="btn btn-primary">ติดต่อฉัน</button>
-      <button class="btn btn-secondary">ผลงาน</button>
+  <section class="hero">
+    <div class="hero-content">
+      <h1>Panya<br>Knox.</h1>
+      <p>Web Developer & Designer</p>
     </div>
-  </div>
-</section>
+  </section>
 
-<!-- SECTION -->
-<section class="section">
-  <h2>เกี่ยวกับฉัน</h2>
-  <p>ผมสนใจด้านการพัฒนาเว็บไซต์ HTML CSS JavaScript และกำลังพัฒนาทักษะอย่างต่อเนื่อง</p>
-</section>
+  <section id="about" class="about-section">
+    <div class="about-container">
+      <h2>About Me</h2>
+      <div class="about-grid">
+        <div class="about-image">
+           <div style="width: 200px; height: 200px; background: #222; border-radius: 10px;"></div>
+        </div>
+        <div class="about-text">
+          <p>สวัสดีครับ ผมปัญญา นักพัฒนาเว็บไซต์ที่สนใจในเทคโนโลยีใหม่ๆ และการสร้าง User Experience ที่ดี</p>
+          <p>ปัจจุบันผมกำลังสนุกกับการเขียน HTML, CSS, JavaScript และการเชื่อมต่อระบบ IoT ด้วย ESP32</p>
+          
+          <div style="margin-top: 30px;">
+            <span class="skill-tag">HTML5</span>
+            <span class="skill-tag">CSS3</span>
+            <span class="skill-tag">JavaScript</span>
+            <span class="skill-tag">ESP32</span>
+            <span class="skill-tag">UI Design</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    &copy; 2026 Panya Portfolio. All Rights Reserved.
+  </footer>
 
 </body>
 </html>
