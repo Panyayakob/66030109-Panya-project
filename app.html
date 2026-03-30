@@ -100,38 +100,74 @@
         <button class="btn-reset" onclick="initGame()">เริ่มเกมใหม่</button>
     </main>
     <script>
-        /* JavaScript ชุดเดิมของคุณ */
-        const symbols = ["🍎","🍌","🍇","🍒","🍉","🍍","🥝","🍓"];
-        let cards = []; let firstCard = null; let secondCard = null; let lock = false;
-        const board = document.getElementById("board");
-        function initGame() {
-            board.innerHTML = ""; firstCard = null; secondCard = null; lock = false;
-            cards = [...symbols, ...symbols].sort(() => 0.5 - Math.random());
-            cards.forEach(symbol => {
-                const card = document.createElement("div");
-                card.classList.add("card");
-                card.innerText = "?";
-                card.addEventListener("click", () => flipCard(card, symbol));
-                board.appendChild(card);
-            });
+    const symbols = ["🍎","🍌","🍇","🍒","🍉","🍍","🥝","🍓"];
+    let cards = []; 
+    let firstCard = null; 
+    let secondCard = null; 
+    let lock = false;
+
+    const board = document.getElementById("board");
+
+    function initGame() {
+        board.innerHTML = ""; 
+        firstCard = null; 
+        secondCard = null; 
+        lock = false;
+        
+        // ผสมการ์ด 8 คู่ (16 ใบ)
+        cards = [...symbols, ...symbols].sort(() => 0.5 - Math.random());
+        
+        cards.forEach(symbol => {
+            const card = document.createElement("div");
+            card.classList.add("card");
+            card.dataset.symbol = symbol; // ✅ สำคัญ: เก็บค่าผลไม้ไว้ใน dataset
+            card.innerText = "?";
+            card.addEventListener("click", () => flipCard(card));
+            board.appendChild(card);
+        });
+    }
+
+    function flipCard(card) {
+        // เงื่อนไขห้ามกด: ถ้าล็อคอยู่, กดใบเดิม, หรือใบนั้นถูกจับคู่ไปแล้ว
+        if (lock || card === firstCard || card.classList.contains("matched")) return;
+
+        const symbol = card.dataset.symbol;
+        card.innerText = symbol; 
+        card.classList.add("flipped");
+
+        if (!firstCard) {
+            firstCard = card;
+            return;
         }
-        function flipCard(card, symbol) {
-            if (lock || card.classList.contains("flipped") || card.classList.contains("matched")) return;
-            card.innerText = symbol; card.classList.add("flipped");
-            if (!firstCard) { firstCard = card; return; }
-            secondCard = card; lock = true;
-            if (firstCard.dataset.symbol === secondCard.dataset.symbol || firstCard.innerText === secondCard.innerText) {
-                firstCard.classList.add("matched"); secondCard.classList.add("matched");
-                firstCard = null; secondCard = null; lock = false;
-            } else {
-                setTimeout(() => {
-                    firstCard.innerText = "?"; secondCard.innerText = "?";
-                    firstCard.classList.remove("flipped"); secondCard.classList.remove("flipped");
-                    firstCard = null; secondCard = null; lock = false;
-                }, 600);
-            }
+
+        secondCard = card;
+        lock = true; // ล็อคบอร์ดชั่วคราวเพื่อรอตรวจ
+
+        // ตรวจสอบว่ารูปตรงกันไหม
+        if (firstCard.dataset.symbol === secondCard.dataset.symbol) {
+            // กรณี: จับคู่ถูก
+            firstCard.classList.add("matched");
+            secondCard.classList.add("matched");
+            resetTurn();
+        } else {
+            // กรณี: จับคู่ผิด (รอ 0.6 วินาทีแล้วคว่ำคืน)
+            setTimeout(() => {
+                firstCard.innerText = "?";
+                secondCard.innerText = "?";
+                firstCard.classList.remove("flipped");
+                secondCard.classList.remove("flipped");
+                resetTurn();
+            }, 600);
         }
-        initGame();
-    </script>
+    }
+
+    function resetTurn() {
+        firstCard = null;
+        secondCard = null;
+        lock = false;
+    }
+
+    initGame(); // เริ่มเกมทันทีที่โหลดหน้า
+</script>
 </body>
 </html>
