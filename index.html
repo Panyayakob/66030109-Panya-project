@@ -3,14 +3,14 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Panya | Portfolio</title>
+  <title>Panya | Portfolio Pink Edition</title>
 
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;700&family=Sarabun:wght@200;400&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Sarabun:wght@200;400;700&display=swap" rel="stylesheet">
 
   <style>
     /* --- 1. SETUP & SMOOTH SCROLL --- */
     html {
-      scroll-behavior: smooth; /* ทำให้เวลาคลิกเมนูแล้วหน้าจอเลื่อนลงแบบนิ่มๆ */
+      scroll-behavior: smooth;
     }
 
     * {
@@ -21,12 +21,12 @@
 
     body {
       font-family: 'Inter', 'Sarabun', sans-serif;
-      background: #000;
-      color: #fff;
+      background: #FFF0F5; /* พื้นหลังชมพูอ่อนมาก */
+      color: #4A3A3F;
       line-height: 1.6;
     }
 
-    /* --- 2. NAVBAR (Fixed) --- */
+    /* --- 2. NAVBAR: พื้นหลังขาว ตัวหนังสือชมพู --- */
     .navbar {
       position: fixed;
       top: 0;
@@ -35,8 +35,12 @@
       display: flex;
       justify-content: center;
       z-index: 1000;
-      background: rgba(0, 0, 0, 0.8);
-      backdrop-filter: blur(10px); /* เอฟเฟกต์กระจกฝ้าแบบ Apple */
+      /* ✅ พื้นหลังสีขาวโปร่งแสง */
+      background: rgba(255, 255, 255, 0.95); 
+      backdrop-filter: blur(15px);
+      /* ✅ เส้นขอบล่างสีชมพูจางๆ */
+      border-bottom: 1px solid rgba(216, 27, 96, 0.1);
+      box-shadow: 0 2px 15px rgba(0, 0, 0, 0.05);
     }
 
     .nav-content {
@@ -51,108 +55,138 @@
     .logo {
       font-size: 20px;
       font-weight: 700;
-      letter-spacing: 2px;
+      letter-spacing: 3px;
       text-decoration: none;
-      color: #fff;
+      /* ✅ โลโก้สีชมพูเข้ม */
+      color: #D81B60; 
+      text-transform: uppercase;
+    }
+
+    .menu {
+      display: flex;
+      gap: 40px;
     }
 
     .menu a {
-      margin-left: 30px;
       text-decoration: none;
-      color: rgba(255,255,255,0.7);
+      /* ✅ ตัวหนังสือเมนูสีชมพูเข้ม */
+      color: rgba(216, 27, 96, 0.8);
       font-size: 13px;
       text-transform: uppercase;
-      letter-spacing: 1px;
+      letter-spacing: 1.5px;
+      font-weight: 600;
       transition: 0.3s;
     }
 
     .menu a:hover {
-      color: #fff;
+      color: #D81B60; /* สีชมพูชัดขึ้นเมื่อ Hover */
     }
 
-    /* --- 3. HERO SECTION (หน้าแรก) --- */
+    /* --- 3. HERO SECTION: ชื่อใหญ่ สวย โดดเด่น --- */
     .hero {
       height: 100vh;
       display: flex;
       align-items: center;
       padding: 0 10%;
-      background: linear-gradient(to right, rgba(0,0,0,0.9), transparent), 
-                  url('images/panyayayaya.png'); /* เปลี่ยนเป็นรูปคุณได้ */
+      /* Gradient สีชมพูทับรูปพื้นหลัง */
+      background: linear-gradient(to right, rgba(216, 27, 96, 0.8), rgba(216, 27, 96, 0.2)), 
+                  url('images/panyayayaya.png'); 
       background-size: cover;
       background-position: center;
+      color: #fff;
+    }
+
+    .hero-content {
+      max-width: 900px;
     }
 
     .hero-content h1 {
-      font-size: clamp(40px, 8vw, 80px);
-      font-weight: 300;
-      margin-bottom: 10px;
+      /* ✅ ชื่อใหญ่พิเศษ หนา และสวยงาม */
+      font-size: clamp(60px, 12vw, 120px);
+      font-weight: 700;
+      line-height: 0.9;
+      margin-bottom: 20px;
+      letter-spacing: -2px;
+      text-shadow: 0 4px 15px rgba(0,0,0,0.2);
     }
 
     .hero-content p {
-      font-size: 14px;
+      font-size: 15px;
       letter-spacing: 8px;
-      color: #aaa;
+      color: #FFC0CB;
       text-transform: uppercase;
+      font-weight: 400;
     }
 
-    /* --- 4. ABOUT SECTION (ส่วนที่เลื่อนลงมาเจอ) --- */
+    /* --- 4. ABOUT SECTION --- */
     .about-section {
-      min-height: 80vh;
       padding: 120px 10%;
-      background: #0a0a0a; /* ดำเทาๆ ให้ดูต่างจากหน้าแรก */
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
+      background: #FFE4E1; /* MistyRose */
     }
 
     .about-container {
-      max-width: 900px;
+      max-width: 1000px;
       margin: 0 auto;
     }
 
     .about-section h2 {
       font-size: 40px;
-      font-weight: 300;
-      margin-bottom: 40px;
-      border-left: 4px solid #fff;
+      font-weight: 700;
+      margin-bottom: 50px;
+      border-left: 6px solid #D81B60;
       padding-left: 20px;
+      color: #880E4F;
     }
 
     .about-grid {
       display: grid;
       grid-template-columns: 1fr 2fr;
-      gap: 50px;
-      align-items: start;
+      gap: 60px;
+      align-items: center;
+    }
+
+    .about-image img {
+      width: 100%;
+      max-width: 300px;
+      border-radius: 20px;
+      border: 5px solid #fff;
+      box-shadow: 0 10px 30px rgba(216, 27, 96, 0.1);
     }
 
     .about-text p {
       font-size: 18px;
-      color: #ccc;
-      margin-bottom: 20px;
+      color: #5D4A50;
+      margin-bottom: 25px;
     }
 
     .skill-tag {
       display: inline-block;
-      padding: 5px 15px;
-      border: 1px solid #444;
+      padding: 8px 20px;
+      border: 1px solid #FFB6C1;
       margin: 5px;
-      font-size: 12px;
-      border-radius: 20px;
+      font-size: 13px;
+      border-radius: 25px;
+      color: #C2185B;
+      background: rgba(255, 255, 255, 0.6);
+      font-weight: 600;
     }
 
     /* --- 5. FOOTER --- */
     footer {
-      padding: 50px 10%;
+      padding: 60px 10%;
       text-align: center;
-      border-top: 1px solid #222;
-      font-size: 12px;
-      color: #555;
+      background: #ffffff;
+      border-top: 1px solid #FFB6C1;
+      font-size: 13px;
+      color: #8C747A;
     }
 
     /* Responsive */
     @media (max-width: 768px) {
-      .about-grid { grid-template-columns: 1fr; }
-      .hero { text-align: center; justify-content: center; }
+      .nav-content { padding: 0 20px; }
+      .menu { display: none; }
+      .about-grid { grid-template-columns: 1fr; text-align: center; }
+      .about-section h2 { border-left: none; padding-left: 0; text-align: center; }
     }
   </style>
 </head>
@@ -160,10 +194,11 @@
 
   <nav class="navbar">
     <div class="nav-content">
-      <a href="#" class="logo">PANYA</a>
+      <a href="index.html" class="logo">PANYA</a>
       <div class="menu">
-        <a href="#">Home</a>
-        <a href="#about">About</a> <a href="app.html">App</a>
+        <a href="index.html">Home</a>
+        <a href="#about">About</a> 
+        <a href="app.html">App</a>
         <a href="about.html">Full CV</a>
       </div>
     </div>
@@ -171,8 +206,8 @@
 
   <section class="hero">
     <div class="hero-content">
-      <h1>Panya<br>Yakob</h1>
       <p>Engineering Education</p>
+      <h1>Panya<br>Yakob</h1>
     </div>
   </section>
 
@@ -181,8 +216,7 @@
       <h2>About Me</h2>
       <div class="about-grid">
         <div class="about-image">
-           <img src="images/panyayakob.png" alt="Panya" 
-                style="width: 250px; height: 250px; object-fit: cover; border-radius: 15px; border: 1px solid rgba(255,255,255,0.1);">
+           <img src="images/panyayakob.png" alt="Panya Profile" onerror="this.src='https://via.placeholder.com/300/D81B60/ffffff?text=Panya'">
         </div>
         <div class="about-text">
           <p>สวัสดีครับ ผมปัญญา นักพัฒนาเว็บไซต์ที่สนใจในเทคโนโลยีใหม่ๆ และการสร้าง User Experience ที่ดี</p>
@@ -198,11 +232,10 @@
         </div>
       </div>
     </div>
-</section>
-          
+  </section>
 
   <footer>
-    &copy; 2026 Panya Portfolio. All Rights Reserved.
+    &copy; 2026 Panya Portfolio. Designed with Pink Passion.
   </footer>
 
 </body>

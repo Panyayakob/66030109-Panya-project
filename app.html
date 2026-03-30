@@ -3,18 +3,23 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Memory Game | Panya</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;700&family=Sarabun:wght@200;400&display=swap" rel="stylesheet">
+    <title>Memory Game | Panya Pink Edition</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Sarabun:wght@200;400;700&display=swap" rel="stylesheet">
+
     <style>
+        /* --- 1. RESET & SETUP --- */
         * { margin: 0; padding: 0; box-sizing: border-box; }
+        
         body {
             font-family: 'Inter', 'Sarabun', sans-serif;
-            background-color: #000;
-            color: #fff;
-            padding-top: 120px; /* เว้นที่ให้ Navbar และ Header */
+            background-color: #FFF0F5; /* พื้นหลังชมพูอ่อนมาก */
+            color: #4A3A3F;
+            padding-top: 100px;
+            line-height: 1.6;
         }
 
-        /* --- NAVBAR: ต้องเหมือนหน้า Home เป๊ะๆ --- */
+        /* --- 2. NAVBAR: พื้นหลังขาว ตัวหนังสือชมพู (ตรงกับหน้า Home) --- */
         .navbar {
             position: fixed;
             top: 0;
@@ -23,10 +28,12 @@
             display: flex;
             justify-content: center;
             z-index: 1000;
-            background: rgba(0, 0, 0, 0.8);
-            backdrop-filter: blur(10px);
-            border-bottom: 1px solid rgba(255,255,255,0.1);
+            background: rgba(255, 255, 255, 0.95); 
+            backdrop-filter: blur(15px);
+            border-bottom: 1px solid rgba(216, 27, 96, 0.1);
+            box-shadow: 0 2px 15px rgba(0, 0, 0, 0.05);
         }
+
         .nav-content {
             width: 100%;
             max-width: 1200px;
@@ -35,51 +42,164 @@
             align-items: center;
             padding: 0 40px;
         }
-        .logo { font-size: 20px; font-weight: 700; letter-spacing: 2px; color: #fff; text-decoration: none; }
-        .menu { display: flex; gap: 30px; }
+
+        .logo {
+            font-size: 20px;
+            font-weight: 700;
+            letter-spacing: 3px;
+            text-decoration: none;
+            color: #D81B60; 
+            text-transform: uppercase;
+        }
+
+        .menu {
+            display: flex;
+            gap: 40px;
+        }
+
         .menu a {
             text-decoration: none;
-            color: rgba(255,255,255,0.7);
+            color: rgba(216, 27, 96, 0.8);
             font-size: 13px;
             text-transform: uppercase;
-            letter-spacing: 1px;
+            letter-spacing: 1.5px;
+            font-weight: 600;
             transition: 0.3s;
         }
-        .menu a:hover { color: #fff; }
 
-        /* --- GAME STYLES --- */
-        .header-section { text-align: center; margin-bottom: 40px; }
-        .gradient-title { font-size: 40px; font-weight: 300; margin-bottom: 10px; }
-        .subtitle { font-size: 14px; text-transform: uppercase; letter-spacing: 5px; color: #666; }
+        .menu a:hover { color: #D81B60; }
 
+        /* --- 3. HEADER & RULES --- */
+        .header-section { 
+            text-align: center; 
+            margin-bottom: 40px; 
+            padding: 0 20px;
+        }
+
+        .gradient-title { 
+            font-size: clamp(32px, 5vw, 48px);
+            font-weight: 700; 
+            margin-bottom: 10px; 
+            color: #D81B60;
+        }
+
+        .subtitle { 
+            font-size: 14px; 
+            text-transform: uppercase; 
+            letter-spacing: 5px; 
+            color: #8C747A;
+            margin-bottom: 25px;
+        }
+
+        .rules-container {
+            max-width: 500px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.7);
+            padding: 25px;
+            border-radius: 20px;
+            border: 1px solid #FFB6C1;
+            text-align: left;
+            box-shadow: 0 5px 15px rgba(216, 27, 96, 0.05);
+        }
+
+        .rules-container h3 {
+            color: #D81B60;
+            font-size: 16px;
+            margin-bottom: 12px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            border-bottom: 2px solid #FFF0F5;
+            padding-bottom: 5px;
+            display: inline-block;
+        }
+
+        .rules-container ul { list-style: none; }
+
+        .rules-container li {
+            font-size: 14px;
+            color: #614E54;
+            margin-bottom: 8px;
+            position: relative;
+            padding-left: 25px;
+        }
+
+        .rules-container li::before {
+            content: '❤';
+            position: absolute;
+            left: 0;
+            color: #D81B60;
+        }
+
+        /* --- 4. GAME BOARD --- */
         .game-board {
             display: grid;
             grid-template-columns: repeat(4, 85px);
             gap: 15px;
             justify-content: center;
-            margin-bottom: 40px;
+            margin: 40px auto;
         }
+        
         .card {
-            width: 85px; height: 85px; background: #1a1a1a;
-            color: #fff; font-size: 32px; display: flex;
-            align-items: center; justify-content: center;
-            border-radius: 12px; cursor: pointer;
-            transition: 0.4s; border: 1px solid rgba(255,255,255,0.1);
+            width: 85px; height: 85px; 
+            background: #ffffff;
+            color: #000; /* เครื่องหมาย ? สีดำ */
+            font-size: 32px; 
+            display: flex;
+            align-items: center; 
+            justify-content: center;
+            border-radius: 12px; 
+            cursor: pointer;
+            transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); 
+            border: 1px solid #FFB6C1;
+            box-shadow: 0 4px 10px rgba(216, 27, 96, 0.1);
+            user-select: none;
         }
-        .card.flipped { background: #333; transform: rotateY(180deg); }
-        .card.matched { background: rgba(255, 255, 255, 0.1); opacity: 0.5; border-color: #fff; }
+
+        .card:hover { transform: scale(1.05); border-color: #D81B60; }
+
+        .card.flipped { 
+            background: #D81B60; 
+            color: #fff; /* พลิกแล้วเป็นรูปผลไม้สีขาว/ปกติ */
+            transform: rotateY(180deg); 
+        }
+        
+        .card.matched { 
+            background: rgba(216, 27, 96, 0.1); 
+            opacity: 0.4; 
+            border-color: transparent;
+            cursor: default;
+            transform: scale(0.9);
+        }
 
         .btn-reset {
-            display: block; margin: 0 auto;
-            background: transparent; color: #fff;
-            border: 1px solid #fff; padding: 12px 30px;
-            text-transform: uppercase; letter-spacing: 2px;
-            font-size: 12px; cursor: pointer; transition: 0.3s;
+            display: block; 
+            margin: 0 auto 80px auto;
+            background: #D81B60;
+            color: #fff;
+            border: none; 
+            padding: 15px 40px;
+            text-transform: uppercase; 
+            letter-spacing: 2px;
+            font-size: 13px; 
+            border-radius: 30px;
+            cursor: pointer; 
+            transition: 0.3s;
+            font-weight: 700;
+            box-shadow: 0 5px 15px rgba(216, 27, 96, 0.3);
         }
-        .btn-reset:hover { background: #fff; color: #000; }
+
+        .btn-reset:hover { background: #AD1457; transform: translateY(-3px); }
+
+        @media (max-width: 450px) {
+            .nav-content { padding: 0 20px; }
+            .menu { display: none; }
+            .game-board { grid-template-columns: repeat(4, 75px); gap: 10px; }
+            .card { width: 75px; height: 75px; }
+        }
     </style>
 </head>
 <body>
+
     <nav class="navbar">
         <div class="nav-content">
             <a href="index.html" class="logo">PANYA</a>
@@ -91,83 +211,94 @@
             </div>
         </div>
     </nav>
+
     <main>
         <section class="header-section">
-            <h1 class="gradient-title">Memory Game</h1>
-            <p class="subtitle">ฝึกสมองในสไตล์มินิมอล</p>
+            <h1 class="gradient-title">Memory Matching</h1>
+            <p class="subtitle">ฝึกสมองกับผลไม้ในธีมชมพู</p>
+
+            <div class="rules-container">
+                <h3>กติกาการเล่น</h3>
+                <ul>
+                    <li>คลิกที่การ์ดเพื่อเปิดดูผลไม้ด้านใน</li>
+                    <li>จับคู่การ์ดที่มีรูปเหมือนกันให้ครบทุกคู่</li>
+                    <li>ถ้าไม่เหมือนกัน การ์ดจะคว่ำลงใน 0.6 วินาที</li>
+                    <li>จับคู่ให้ครบทั้ง <strong>8 คู่</strong> เพื่อชนะเกม!</li>
+                </ul>
+            </div>
         </section>
+
         <div class="game-board" id="board"></div>
-        <button class="btn-reset" onclick="initGame()">เริ่มเกมใหม่</button>
+
+        <button class="btn-reset" onclick="initGame()">เริ่มเกมใหม่ / สุ่มการ์ด</button>
     </main>
+
     <script>
-    const symbols = ["🍎","🍌","🍇","🍒","🍉","🍍","🥝","🍓"];
-    let cards = []; 
-    let firstCard = null; 
-    let secondCard = null; 
-    let lock = false;
+        const symbols = ["🍎","🍌","🍇","🍒","🍉","🍍","🥝","🍓"];
+        let cards = []; 
+        let firstCard = null; 
+        let secondCard = null; 
+        let lock = false;
 
-    const board = document.getElementById("board");
+        const board = document.getElementById("board");
 
-    function initGame() {
-        board.innerHTML = ""; 
-        firstCard = null; 
-        secondCard = null; 
-        lock = false;
-        
-        // ผสมการ์ด 8 คู่ (16 ใบ)
-        cards = [...symbols, ...symbols].sort(() => 0.5 - Math.random());
-        
-        cards.forEach(symbol => {
-            const card = document.createElement("div");
-            card.classList.add("card");
-            card.dataset.symbol = symbol; // ✅ สำคัญ: เก็บค่าผลไม้ไว้ใน dataset
-            card.innerText = "?";
-            card.addEventListener("click", () => flipCard(card));
-            board.appendChild(card);
-        });
-    }
-
-    function flipCard(card) {
-        // เงื่อนไขห้ามกด: ถ้าล็อคอยู่, กดใบเดิม, หรือใบนั้นถูกจับคู่ไปแล้ว
-        if (lock || card === firstCard || card.classList.contains("matched")) return;
-
-        const symbol = card.dataset.symbol;
-        card.innerText = symbol; 
-        card.classList.add("flipped");
-
-        if (!firstCard) {
-            firstCard = card;
-            return;
+        function initGame() {
+            board.innerHTML = ""; 
+            firstCard = null; 
+            secondCard = null; 
+            lock = false;
+            
+            // ผสมการ์ด 8 คู่ (16 ใบ)
+            cards = [...symbols, ...symbols].sort(() => 0.5 - Math.random());
+            
+            cards.forEach(symbol => {
+                const card = document.createElement("div");
+                card.classList.add("card");
+                card.dataset.symbol = symbol; // เก็บค่าไว้เทียบ
+                card.innerText = "?";
+                card.addEventListener("click", () => flipCard(card));
+                board.appendChild(card);
+            });
         }
 
-        secondCard = card;
-        lock = true; // ล็อคบอร์ดชั่วคราวเพื่อรอตรวจ
+        function flipCard(card) {
+            if (lock || card === firstCard || card.classList.contains("matched")) return;
 
-        // ตรวจสอบว่ารูปตรงกันไหม
-        if (firstCard.dataset.symbol === secondCard.dataset.symbol) {
-            // กรณี: จับคู่ถูก
-            firstCard.classList.add("matched");
-            secondCard.classList.add("matched");
-            resetTurn();
-        } else {
-            // กรณี: จับคู่ผิด (รอ 0.6 วินาทีแล้วคว่ำคืน)
-            setTimeout(() => {
-                firstCard.innerText = "?";
-                secondCard.innerText = "?";
-                firstCard.classList.remove("flipped");
-                secondCard.classList.remove("flipped");
+            const symbol = card.dataset.symbol;
+            card.innerText = symbol; 
+            card.classList.add("flipped");
+
+            if (!firstCard) {
+                firstCard = card;
+                return;
+            }
+
+            secondCard = card;
+            lock = true; 
+
+            if (firstCard.dataset.symbol === secondCard.dataset.symbol) {
+                firstCard.classList.add("matched");
+                secondCard.classList.add("matched");
                 resetTurn();
-            }, 600);
+            } else {
+                setTimeout(() => {
+                    firstCard.innerText = "?";
+                    secondCard.innerText = "?";
+                    firstCard.classList.remove("flipped");
+                    secondCard.classList.remove("flipped");
+                    resetTurn();
+                }, 600);
+            }
         }
-    }
 
-    function resetTurn() {
-        firstCard = null;
-        secondCard = null;
-        lock = false;
-    }
+        function resetTurn() {
+            firstCard = null;
+            secondCard = null;
+            lock = false;
+        }
 
-    initGame(); // เริ่มเกมทันทีที่โหลดหน้า
-</script>
+        // เริ่มเกมทันที
+        initGame();
+    </script>
 </body>
 </html>

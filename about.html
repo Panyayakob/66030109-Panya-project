@@ -3,12 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CV | Panya Portfolio</title>
+    <title>CV | Panya Pink Edition</title>
     
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Sarabun:wght@200;400&display=swap" rel="stylesheet">
 
     <style>
-        /* 1. RESET & DARK BASE */
+        /* 1. RESET & BASE */
         * {
             margin: 0;
             padding: 0;
@@ -17,24 +17,27 @@
 
         body {
             font-family: 'Inter', 'Sarabun', sans-serif;
-            background-color: #000;
-            color: #fff;
+            background: #FFF0F5; /* พื้นหลังชมพูอ่อน */
+            color: #4A3A3F;
             line-height: 1.6;
-            padding-top: 120px; /* เว้นที่ให้ Navbar มากขึ้นเพื่อให้เนื้อหาไม่จม */
+            /* ✅ ปรับให้เลื่อนได้ปกติ */
+            overflow-y: auto; 
+            padding-top: 100px;
         }
 
-        /* 2. NAVBAR - ปรับให้ตรงกับหน้า Home และ App เป๊ะๆ */
+        /* --- 2. NAVBAR: พื้นหลังขาว ตัวหนังสือชมพู --- */
         .navbar {
             position: fixed;
             top: 0;
             width: 100%;
-            height: 70px; /* ปรับเหลือ 70px ตามหน้า Home */
+            height: 70px;
             display: flex;
             justify-content: center;
-            z-index: 9999;
-            background: rgba(0, 0, 0, 0.8);
+            z-index: 1000;
+            background: rgba(255, 255, 255, 0.95); 
             backdrop-filter: blur(15px);
-            border-bottom: 1px solid rgba(255,255,255,0.1);
+            border-bottom: 1px solid rgba(216, 27, 96, 0.1);
+            box-shadow: 0 2px 15px rgba(0, 0, 0, 0.05);
         }
 
         .nav-content {
@@ -46,35 +49,37 @@
             padding: 0 40px;
         }
 
-        .logo { 
-            font-size: 20px; 
-            font-weight: 700; 
-            letter-spacing: 2px; 
-            color: #fff; 
-            text-decoration: none; 
+        .logo {
+            font-size: 20px;
+            font-weight: 700;
+            letter-spacing: 3px;
+            text-decoration: none;
+            color: #D81B60; 
+            text-transform: uppercase;
         }
 
-        /* ใช้ Flex และ Gap: 30px ให้เท่ากับทุกหน้า */
         .menu {
             display: flex;
-            gap: 30px;
+            gap: 40px;
         }
 
-        .menu a { 
-            text-decoration: none; 
-            color: rgba(255,255,255,0.7); 
-            font-size: 13px; 
+        .menu a {
+            text-decoration: none;
+            color: rgba(216, 27, 96, 0.8);
+            font-size: 13px;
             text-transform: uppercase;
-            letter-spacing: 1px;
+            letter-spacing: 1.5px;
+            font-weight: 600;
             transition: 0.3s;
         }
-        .menu a:hover { color: #fff; }
+
+        .menu a:hover { color: #D81B60; }
 
         /* 3. CV CONTAINER */
         .cv-container {
             max-width: 800px;
             margin: 0 auto;
-            padding: 0 20px;
+            padding: 0 20px 80px 20px; /* เพิ่ม padding ล่างเพื่อให้เลื่อนพ้นปุ่ม */
         }
 
         .profile-header {
@@ -82,62 +87,61 @@
             margin-bottom: 60px;
         }
 
+        /* ✅ ปรับปรุงเพื่อให้เห็นรูปเต็มๆ ไม่โดนตัด */
         .profile-img {
-            width: 150px;
-            height: 150px;
-            border-radius: 50%;
-            object-fit: cover;
+            width: 100%;
+            max-width: 400px; /* ปรับขนาดความกว้างตามต้องการ */
+            height: auto;     /* ให้ความสูงปรับตามรูปจริง */
+            border-radius: 20px; /* ขอบมนสวยงามแบบสี่เหลี่ยม */
             margin-bottom: 25px;
-            border: 2px solid rgba(255,255,255,0.2);
-            padding: 5px;
+            border: 5px solid #fff; 
+            box-shadow: 0 15px 35px rgba(216, 27, 96, 0.15);
+            object-fit: contain; /* มั่นใจว่าเห็นครบทั้งรูป */
         }
 
         .profile-header h1 {
             font-size: clamp(32px, 5vw, 48px);
-            font-weight: 300;
+            font-weight: 700;
             letter-spacing: -1px;
             margin-bottom: 5px;
-        }
-
-        .gradient-name {
-            background: linear-gradient(135deg, #fff 0%, #888 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+            color: #D81B60;
         }
 
         /* 4. CV CARD STYLE */
         .cv-card {
-            background: #0a0a0a;
-            border-radius: 15px;
+            background: #ffffff;
+            border-radius: 25px;
             padding: 35px;
             margin-bottom: 25px;
-            border: 1px solid rgba(255,255,255,0.05);
-            transition: 0.3s;
+            border: 1px solid #FFB6C1;
+            transition: 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+            box-shadow: 0 4px 15px rgba(216, 27, 96, 0.05);
         }
 
         .cv-card:hover {
-            border-color: rgba(255,255,255,0.2);
-            background: #111;
+            transform: translateY(-8px);
+            border-color: #D81B60;
+            box-shadow: 0 12px 30px rgba(216, 27, 96, 0.1);
         }
 
         .section-title {
-            font-size: 12px;
+            font-size: 13px;
             text-transform: uppercase;
             letter-spacing: 3px;
-            color: #666;
+            color: #D81B60;
             margin-bottom: 15px;
-            font-weight: 600;
+            font-weight: 700;
         }
 
         .info-text {
             font-size: 18px;
-            font-weight: 400;
-            color: #ddd;
+            font-weight: 600;
+            color: #4A3A3F;
             margin-bottom: 5px;
         }
 
         .sub-text {
-            color: #555;
+            color: #8C747A;
             font-size: 14px;
         }
 
@@ -150,33 +154,42 @@
         }
 
         .skill-tag {
-            background: transparent;
-            padding: 6px 18px;
-            border-radius: 20px;
+            background: #FFF0F5;
+            padding: 10px 20px;
+            border-radius: 30px;
             font-size: 13px;
-            border: 1px solid #333;
-            color: #888;
+            border: 1px solid #FFB6C1;
+            color: #C2185B;
+            font-weight: 600;
             transition: 0.3s;
         }
 
         .skill-tag:hover {
-            border-color: #fff;
+            background: #D81B60;
             color: #fff;
+            transform: scale(1.1);
         }
 
         .back-home {
             display: inline-block;
-            margin: 40px 0 80px 0;
-            color: #fff;
-            font-size: 13px;
+            margin: 40px 0;
+            color: #D81B60;
+            font-size: 14px;
             text-decoration: none;
             text-transform: uppercase;
             letter-spacing: 2px;
-            opacity: 0.5;
+            font-weight: 700;
             transition: 0.3s;
+            padding: 10px 20px;
+            border: 2px solid #D81B60;
+            border-radius: 50px;
         }
 
-        .back-home:hover { opacity: 1; }
+        .back-home:hover { 
+            background: #D81B60; 
+            color: #fff;
+            box-shadow: 0 5px 15px rgba(216, 27, 96, 0.3);
+        }
 
     </style>
 </head>
@@ -189,7 +202,7 @@
                 <a href="index.html">Home</a>
                 <a href="index.html#about">About</a>
                 <a href="app.html">App</a>
-                <a href="about.html">CV</a>
+                <a href="about.html">Full CV</a>
             </div>
         </div>
     </nav>
@@ -197,16 +210,17 @@
     <main class="cv-container">
         
         <header class="profile-header">
-            <img src="images/panyayakob.png" alt="Panya" class="profile-img" onerror="this.src='https://via.placeholder.com/150/222/fff?text=Panya'">
+            <img src="images/panyayakob.png" alt="Panya" class="profile-img" onerror="this.src='https://via.placeholder.com/400x500/D81B60/ffffff?text=Panya+Yakob'">
             
-            <h1>Curriculum <span class="gradient-name">Vitae</span></h1>
-            <p style="color: #555; letter-spacing: 2px; text-transform: uppercase; font-size: 14px;">Personal Profile & Experience</p>
+            <h1>Curriculum Vitae</h1>
+            <p style="color: #8C747A; letter-spacing: 2px; text-transform: uppercase; font-size: 14px;">Personal Profile & Experience</p>
         </header>
 
         <div class="cv-card">
             <p class="section-title">Personal Info</p>
             <p class="info-text">Panya Yakob (ปัญญา)</p>
             <p class="sub-text">Web Developer based in Thailand</p>
+            <p class="sub-text">เชี่ยวชาญด้านการพัฒนาเว็บไซต์และการเชื่อมต่อระบบ IoT</p>
         </div>
 
         <div class="cv-card">
@@ -224,7 +238,14 @@
                 <span class="skill-tag">IoT (ESP32)</span>
                 <span class="skill-tag">Responsive Design</span>
                 <span class="skill-tag">Firebase</span>
+                <span class="skill-tag">Bootstrap 5</span>
             </div>
+        </div>
+
+        <div class="cv-card">
+            <p class="section-title">Current Projects</p>
+            <p class="info-text">Smart Microgreen System</p>
+            <p class="sub-text">พัฒนาระบบปลูกผักอัจฉริยะด้วย ESP32 เชื่อมต่อ Firebase และควบคุมผ่าน Web App</p>
         </div>
 
         <div style="text-align: center;">
