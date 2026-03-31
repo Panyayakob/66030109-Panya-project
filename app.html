@@ -2,18 +2,19 @@
 <html lang="th">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Zombie Hunter | Panya Pink Edition</title>
     
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Sarabun:wght@400;700&display=swap" rel="stylesheet">
 
     <style>
-        /* --- 1. BASE STYLES (Progressive Enhancement) --- */
+        /* --- 1. BASE STYLES --- */
         :root {
             --primary-pink: #D81B60;
             --soft-pink: #FFF0F5;
             --accent-pink: #FFB6C1;
             --dark-text: #4A3A3F;
+            --game-bg: #232d37;
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -26,11 +27,11 @@
             color: var(--dark-text);
             line-height: 1.6;
             -webkit-font-smoothing: antialiased;
+            overflow-x: hidden;
         }
 
-        /* --- 2. NAVIGATION (Responsive) --- */
-        /* --- 2. NAVIGATION (ปรับปรุงให้ Responsive) --- */
-.navbar {
+        /* --- 2. NAVIGATION (Responsive Optimized) --- */
+        .navbar {
             position: fixed;
             top: 0; width: 100%; height: 60px;
             background: rgba(255, 255, 255, 0.98);
@@ -43,148 +44,140 @@
         .nav-content {
             width: 100%; max-width: 1200px;
             display: flex; justify-content: space-between;
-            align-items: center; padding: 0 20px;
+            align-items: center; padding: 0 15px;
         }
 
-.logo {
-    font-size: 1.2rem; 
-    font-weight: 700;
-    text-decoration: none; 
-    color: var(--primary-pink);
-    letter-spacing: 2px;
-    flex-shrink: 0; /* ป้องกันโลโก้โดนบีบจนเบี้ยว */
-}
+        .logo {
+            font-size: 1.1rem; font-weight: 700;
+            text-decoration: none; color: var(--primary-pink);
+            letter-spacing: 2px;
+            flex-shrink: 0;
+        }
 
-.menu { 
-    display: flex; 
-    gap: 15px; 
-    flex-wrap: nowrap; /* ให้เมนูเรียงแถวเดียวกัน */
-    overflow-x: auto; /* ถ้าจอมือถือแคบมาก ให้เลื่อนซ้ายขวาได้แทนการหลุดหน้าจอ */
-    -webkit-overflow-scrolling: touch;
-}
+        .menu { 
+            display: flex; 
+            gap: 12px; 
+            overflow-x: auto; 
+            white-space: nowrap;
+            padding: 5px 0;
+            -webkit-overflow-scrolling: touch;
+        }
 
-.menu a {
-    text-decoration: none; 
-    color: var(--dark-text);
-    font-size: clamp(0.65rem, 2.5vw, 0.75rem); /* ปรับขนาดฟอนต์อัตโนมัติตามความกว้างหน้าจอ */
-    font-weight: 600;
-    text-transform: uppercase; 
-    white-space: nowrap; /* ป้องกันตัวอักษรตัดบรรทัด */
-    transition: 0.3s;
-}
+        /* ซ่อน Scrollbar สำหรับ Chrome/Safari */
+        .menu::-webkit-scrollbar { display: none; }
 
-/* ปรับระยะห่างเมนูสำหรับมือถือที่แคบมากๆ */
-@media (max-width: 400px) {
-    .nav-content {
-        padding: 10px 10px;
-    }
-    .menu {
-        gap: 8px;
-    }
-}
+        .menu a {
+            text-decoration: none; color: var(--dark-text);
+            font-size: 0.7rem; font-weight: 600;
+            text-transform: uppercase; transition: 0.3s;
+        }
+        .menu a:hover { color: var(--primary-pink); }
+
         /* --- 3. HEADER SECTION --- */
         .header-section { 
-            padding: 100px 20px 40px; 
+            padding: 90px 20px 40px; 
             text-align: center; 
             background: linear-gradient(135deg, var(--primary-pink) 0%, #AD1457 100%);
             color: #fff;
         }
 
         .header-section h1 {
-            font-size: clamp(2.5rem, 8vw, 4rem);
+            font-size: clamp(2rem, 8vw, 3.5rem);
             line-height: 1.2; margin-bottom: 10px;
             text-shadow: 0 5px 15px rgba(0,0,0,0.2);
         }
 
         .subtitle {
-            font-size: 0.9rem; letter-spacing: 4px;
+            font-size: 0.8rem; letter-spacing: 3px;
             color: var(--accent-pink); text-transform: uppercase;
         }
 
         /* --- 4. GAME CONTENT & RULES --- */
-        .game-wrapper { max-width: 900px; margin: -30px auto 40px; padding: 0 20px; }
+        .game-wrapper { max-width: 900px; margin: -25px auto 40px; padding: 0 15px; }
 
         .rules-container {
-            background: #fff; padding: 25px;
-            border-radius: 20px; margin-bottom: 30px;
+            background: #fff; padding: 20px;
+            border-radius: 20px; margin-bottom: 25px;
             box-shadow: 0 10px 30px rgba(216, 27, 96, 0.1);
             border-left: 5px solid var(--primary-pink);
         }
 
-        .rules-container h3 { color: var(--primary-pink); margin-bottom: 10px; }
-        .rules-container ul { list-style: none; font-size: 0.95rem; }
-        .rules-container li { margin-bottom: 5px; position: relative; padding-left: 30px; }
+        .rules-container h3 { color: var(--primary-pink); font-size: 1.1rem; margin-bottom: 10px; }
+        .rules-container ul { list-style: none; font-size: 0.9rem; }
+        .rules-container li { margin-bottom: 5px; position: relative; padding-left: 25px; }
         .rules-container li::before { content: '🌸'; position: absolute; left: 0; }
 
-        /* --- 5. ENHANCED GAME AREA --- */
+        /* --- 5. GAME AREA --- */
         .game-container {
             position: relative;
             background: var(--game-bg);
-            height: 500px;
+            height: 60vh; /* ปรับตามความสูงหน้าจอ */
+            min-height: 380px;
             border-radius: 25px;
             overflow: hidden;
             border: 6px solid #fff;
             box-shadow: 0 20px 40px rgba(0,0,0,0.2);
-            cursor: crosshair;
+            touch-action: manipulation; /* ป้องกันการซูมเวลากดรัวๆ */
         }
 
         .game-stats {
             display: flex; justify-content: space-around;
-            padding: 15px; background: #fff;
-            font-size: 1.2rem; font-weight: 700; color: var(--primary-pink);
+            padding: 12px; background: #fff;
+            font-size: 1.1rem; font-weight: 700; color: var(--primary-pink);
         }
 
         .zombie {
-            width: 70px; height: 70px; position: absolute;
-            font-size: 50px; user-select: none;
-            transition: transform 0.1s ease;
+            width: 65px; height: 65px; position: absolute;
+            font-size: 45px; user-select: none;
             display: flex; align-items: center; justify-content: center;
             filter: drop-shadow(0 5px 10px rgba(0,0,0,0.3));
+            cursor: pointer;
+            z-index: 10;
         }
 
         .hit-effect {
             position: absolute; color: var(--accent-pink); font-weight: 900;
-            pointer-events: none; animation: floatUp 0.7s ease-out forwards;
-            font-size: 1.5rem; text-shadow: 2px 2px 0 var(--primary-pink);
+            pointer-events: none; animation: floatUp 0.6s ease-out forwards;
+            font-size: 1.3rem; text-shadow: 2px 2px 0 var(--primary-pink);
             z-index: 100;
         }
 
         @keyframes floatUp {
             0% { opacity: 1; transform: translateY(0); }
-            100% { opacity: 0; transform: translateY(-100px); }
+            100% { opacity: 0; transform: translateY(-80px); }
         }
 
         /* --- 6. BUTTONS & FOOTER --- */
         .btn-start {
-            display: block; margin: 30px auto;
+            display: block; margin: 25px auto;
             background: var(--primary-pink); color: #fff;
-            border: none; padding: 15px 40px;
-            border-radius: 50px; font-weight: 700; font-size: 1.1rem;
+            border: none; padding: 14px 35px;
+            border-radius: 50px; font-weight: 700; font-size: 1rem;
             cursor: pointer; transition: 0.3s;
             box-shadow: 0 10px 20px rgba(216, 27, 96, 0.3);
         }
-        .btn-start:hover { transform: translateY(-3px); box-shadow: 0 15px 25px rgba(216, 27, 96, 0.4); }
 
         footer {
-            padding: 40px 20px; text-align: center;
-            background: #fff; font-size: 0.8rem; opacity: 0.8;
+            padding: 30px 20px; text-align: center;
+            background: #fff; font-size: 0.75rem; opacity: 0.8;
         }
 
-        @media (max-width: 768px) {
-            .game-container { height: 400px; }
-            .menu { display: none; }
+        @media (max-width: 400px) {
+            .logo { font-size: 0.9rem; }
+            .menu { gap: 8px; }
+            .nav-content { padding: 0 10px; }
         }
     </style>
 </head>
 <body>
 
-    <header role="banner">
+    <header>
         <nav class="navbar">
             <div class="nav-content">
                 <a href="index.html" class="logo">PANYA</a>
                 <div class="menu">
                     <a href="index.html">Home</a>
-                    <a href="#about">About</a> 
+                    <a href="index.html#about">About</a> 
                     <a href="app.html">App</a>
                     <a href="about.html">Full CV</a>
                 </div>
@@ -202,7 +195,7 @@
             <div class="rules-container">
                 <h3>กติกาการเล่น</h3>
                 <ul>
-                    <li>แตะที่ซอมบี้ 🧟 เพื่อกำจัด (+10 คะแนน)</li>
+                    <li>แตะซอมบี้ 🧟 เพื่อกำจัด (+10 คะแนน)</li>
                     <li>หากปล่อยหลุดไป (-5 คะแนน)</li>
                     <li>เวลาจำกัด 30 วินาที</li>
                 </ul>
@@ -227,8 +220,7 @@
         let score = 0;
         let timeLeft = 30;
         let gameActive = false;
-        let spawnInterval;
-        let countdownInterval;
+        let spawnInterval, countdownInterval;
 
         const gameArea = document.getElementById('game-area');
         const scoreElement = document.getElementById('score');
@@ -237,13 +229,9 @@
 
         function startGame() {
             if (gameActive) return;
-            
-            score = 0;
-            timeLeft = 30;
-            gameActive = true;
+            score = 0; timeLeft = 30; gameActive = true;
             scoreElement.innerText = score;
             timerElement.innerText = timeLeft;
-            
             startBtn.style.visibility = 'hidden';
             
             spawnInterval = setInterval(spawnZombie, 750);
@@ -257,18 +245,25 @@
             zombie.className = 'zombie';
             zombie.innerText = '🧟';
             
-            const maxX = gameArea.clientWidth - 80;
-            const maxY = gameArea.clientHeight - 130;
+            const maxX = gameArea.clientWidth - 70;
+            const maxY = gameArea.clientHeight - 120;
             zombie.style.left = Math.random() * maxX + 'px';
             zombie.style.top = (Math.random() * maxY + 60) + 'px';
 
-            zombie.onclick = (e) => {
+            // รองรับทั้งคลิกและสัมผัสบนมือถือ
+            const handleAction = (e) => {
                 if (!gameActive) return;
+                e.preventDefault();
                 score += 10;
                 scoreElement.innerText = score;
-                createHitEffect(e.clientX, e.clientY);
+                
+                const x = e.clientX || (e.touches && e.touches[0].clientX);
+                const y = e.clientY || (e.touches && e.touches[0].clientY);
+                createHitEffect(x, y);
                 zombie.remove();
             };
+
+            zombie.addEventListener('pointerdown', handleAction);
 
             gameArea.appendChild(zombie);
 
@@ -280,7 +275,7 @@
                         scoreElement.innerText = score;
                     }
                 }
-            }, 1200);
+            }, 1100);
         }
 
         function createHitEffect(x, y) {
@@ -291,7 +286,7 @@
             effect.style.top = (y - 50) + 'px';
             effect.style.position = 'fixed';
             document.body.appendChild(effect);
-            setTimeout(() => effect.remove(), 700);
+            setTimeout(() => effect.remove(), 600);
         }
 
         function updateTimer() {
@@ -304,12 +299,8 @@
             gameActive = false;
             clearInterval(spawnInterval);
             clearInterval(countdownInterval);
-            
-            const zombies = document.querySelectorAll('.zombie');
-            zombies.forEach(z => z.remove());
-
+            document.querySelectorAll('.zombie').forEach(z => z.remove());
             alert('⏰ จบเกม!\nคะแนนของคุณคือ: ' + score);
-            
             startBtn.style.visibility = 'visible';
             startBtn.innerText = 'เล่นอีกครั้ง';
         }
