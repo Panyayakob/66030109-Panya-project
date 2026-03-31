@@ -6,6 +6,7 @@
     <title>Memory Game | Panya Pink Edition</title>
     
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Sarabun:wght@200;400;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
 
     <style>
         /* --- 1. RESET & SETUP --- */
@@ -13,21 +14,18 @@
         
         body {
             font-family: 'Inter', 'Sarabun', sans-serif;
-            background-color: #FFF0F5; /* พื้นหลังชมพูอ่อนมาก */
+            background-color: #FFF0F5;
             color: #4A3A3F;
             padding-top: 100px;
             line-height: 1.6;
+            overflow-x: hidden;
         }
 
-        /* --- 2. NAVBAR: พื้นหลังขาว ตัวหนังสือชมพู (ตรงกับหน้า Home) --- */
+        /* --- 2. NAVBAR --- */
         .navbar {
             position: fixed;
-            top: 0;
-            width: 100%;
-            height: 70px;
-            display: flex;
-            justify-content: center;
-            z-index: 1000;
+            top: 0; width: 100%; height: 70px;
+            display: flex; justify-content: center; z-index: 1000;
             background: rgba(255, 255, 255, 0.95); 
             backdrop-filter: blur(15px);
             border-bottom: 1px solid rgba(216, 27, 96, 0.1);
@@ -35,166 +33,99 @@
         }
 
         .nav-content {
-            width: 100%;
-            max-width: 1200px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
+            width: 100%; max-width: 1200px;
+            display: flex; justify-content: space-between; align-items: center;
             padding: 0 40px;
         }
 
         .logo {
-            font-size: 20px;
-            font-weight: 700;
-            letter-spacing: 3px;
-            text-decoration: none;
-            color: #D81B60; 
-            text-transform: uppercase;
+            font-size: 20px; font-weight: 700; letter-spacing: 3px;
+            text-decoration: none; color: #D81B60; text-transform: uppercase;
         }
 
-        .menu {
-            display: flex;
-            gap: 40px;
-        }
-
+        .menu { display: flex; gap: 40px; }
         .menu a {
-            text-decoration: none;
-            color: rgba(216, 27, 96, 0.8);
-            font-size: 13px;
-            text-transform: uppercase;
-            letter-spacing: 1.5px;
-            font-weight: 600;
-            transition: 0.3s;
+            text-decoration: none; color: rgba(216, 27, 96, 0.8);
+            font-size: 13px; text-transform: uppercase; letter-spacing: 1.5px;
+            font-weight: 600; transition: 0.3s;
         }
-
         .menu a:hover { color: #D81B60; }
 
-        /* --- 3. HEADER & RULES --- */
-        .header-section { 
-            text-align: center; 
-            margin-bottom: 40px; 
-            padding: 0 20px;
-        }
-
-        .gradient-title { 
-            font-size: clamp(32px, 5vw, 48px);
-            font-weight: 700; 
-            margin-bottom: 10px; 
-            color: #D81B60;
-        }
-
-        .subtitle { 
-            font-size: 14px; 
-            text-transform: uppercase; 
-            letter-spacing: 5px; 
-            color: #8C747A;
-            margin-bottom: 25px;
-        }
+        /* --- 3. HEADER --- */
+        .header-section { text-align: center; margin-bottom: 40px; padding: 0 20px; }
+        .gradient-title { font-size: clamp(32px, 5vw, 48px); font-weight: 700; margin-bottom: 10px; color: #D81B60; }
+        .subtitle { font-size: 14px; text-transform: uppercase; letter-spacing: 5px; color: #8C747A; margin-bottom: 25px; }
 
         .rules-container {
-            max-width: 500px;
-            margin: 0 auto;
-            background: rgba(255, 255, 255, 0.7);
-            padding: 25px;
-            border-radius: 20px;
-            border: 1px solid #FFB6C1;
-            text-align: left;
-            box-shadow: 0 5px 15px rgba(216, 27, 96, 0.05);
+            max-width: 500px; margin: 0 auto;
+            background: rgba(255, 255, 255, 0.7); padding: 25px;
+            border-radius: 20px; border: 1px solid #FFB6C1;
+            text-align: left; box-shadow: 0 5px 15px rgba(216, 27, 96, 0.05);
         }
 
         .rules-container h3 {
-            color: #D81B60;
-            font-size: 16px;
-            margin-bottom: 12px;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            border-bottom: 2px solid #FFF0F5;
-            padding-bottom: 5px;
-            display: inline-block;
+            color: #D81B60; font-size: 16px; margin-bottom: 12px;
+            text-transform: uppercase; border-bottom: 2px solid #FFF0F5;
+            padding-bottom: 5px; display: inline-block;
         }
-
         .rules-container ul { list-style: none; }
-
-        .rules-container li {
-            font-size: 14px;
-            color: #614E54;
-            margin-bottom: 8px;
-            position: relative;
-            padding-left: 25px;
-        }
-
-        .rules-container li::before {
-            content: '❤';
-            position: absolute;
-            left: 0;
-            color: #D81B60;
-        }
+        .rules-container li { font-size: 14px; color: #614E54; margin-bottom: 8px; position: relative; padding-left: 25px; }
+        .rules-container li::before { content: '❤'; position: absolute; left: 0; color: #D81B60; }
 
         /* --- 4. GAME BOARD --- */
         .game-board {
-            display: grid;
-            grid-template-columns: repeat(4, 85px);
-            gap: 15px;
-            justify-content: center;
-            margin: 40px auto;
+            display: grid; grid-template-columns: repeat(4, 85px);
+            gap: 15px; justify-content: center; margin: 40px auto;
         }
         
         .card {
-            width: 85px; height: 85px; 
-            background: #ffffff;
-            color: #000; /* เครื่องหมาย ? สีดำ */
-            font-size: 32px; 
-            display: flex;
-            align-items: center; 
-            justify-content: center;
-            border-radius: 12px; 
-            cursor: pointer;
+            width: 85px; height: 85px; background: #ffffff;
+            color: #000; font-size: 32px; display: flex;
+            align-items: center; justify-content: center;
+            border-radius: 12px; cursor: pointer;
             transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); 
             border: 1px solid #FFB6C1;
             box-shadow: 0 4px 10px rgba(216, 27, 96, 0.1);
             user-select: none;
+            perspective: 1000px;
         }
 
         .card:hover { transform: scale(1.05); border-color: #D81B60; }
 
         .card.flipped { 
-            background: #D81B60; 
-            color: #fff; /* พลิกแล้วเป็นรูปผลไม้สีขาว/ปกติ */
+            background: #D81B60; color: #fff; 
             transform: rotateY(180deg); 
         }
         
         .card.matched { 
-            background: rgba(216, 27, 96, 0.1); 
-            opacity: 0.4; 
-            border-color: transparent;
-            cursor: default;
-            transform: scale(0.9);
+            background: #FFC0CB; /* เปลี่ยนเป็นชมพูหวานเมื่อคู่กัน */
+            color: #D81B60;
+            opacity: 0.8; border-color: #D81B60;
+            cursor: default; transform: scale(0.95);
+            animation: pulse 1s infinite;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(0.95); }
+            50% { transform: scale(1); }
+            100% { transform: scale(0.95); }
         }
 
         .btn-reset {
-            display: block; 
-            margin: 0 auto 80px auto;
-            background: #D81B60;
-            color: #fff;
-            border: none; 
-            padding: 15px 40px;
-            text-transform: uppercase; 
-            letter-spacing: 2px;
-            font-size: 13px; 
-            border-radius: 30px;
-            cursor: pointer; 
-            transition: 0.3s;
-            font-weight: 700;
+            display: block; margin: 0 auto 80px auto;
+            background: #D81B60; color: #fff; border: none; 
+            padding: 15px 40px; text-transform: uppercase; 
+            letter-spacing: 2px; font-size: 13px; 
+            border-radius: 30px; cursor: pointer; 
+            transition: 0.3s; font-weight: 700;
             box-shadow: 0 5px 15px rgba(216, 27, 96, 0.3);
         }
 
         .btn-reset:hover { background: #AD1457; transform: translateY(-3px); }
 
         @media (max-width: 450px) {
-            .nav-content { padding: 0 20px; }
-            .menu { display: none; }
-            .game-board { grid-template-columns: repeat(4, 75px); gap: 10px; }
-            .card { width: 75px; height: 75px; }
+            .game-board { grid-template-columns: repeat(4, 70px); gap: 10px; }
+            .card { width: 70px; height: 70px; }
         }
     </style>
 </head>
@@ -202,12 +133,10 @@
 
     <nav class="navbar">
         <div class="nav-content">
-            <a href="index.html" class="logo">PANYA</a>
+            <a href="#" class="logo">PANYA</a>
             <div class="menu">
-                <a href="index.html">Home</a>
-                <a href="index.html#about">About</a>
-                <a href="app.html">App</a>
-                <a href="about.html">Full CV</a>
+                <a href="#">Home</a>
+                <a href="#">App</a>
             </div>
         </div>
     </nav>
@@ -222,8 +151,8 @@
                 <ul>
                     <li>คลิกที่การ์ดเพื่อเปิดดูผลไม้ด้านใน</li>
                     <li>จับคู่การ์ดที่มีรูปเหมือนกันให้ครบทุกคู่</li>
-                    <li>ถ้าไม่เหมือนกัน การ์ดจะคว่ำลงใน 0.6 วินาที</li>
-                    <li>จับคู่ให้ครบทั้ง <strong>8 คู่</strong> เพื่อชนะเกม!</li>
+                    <li>ถ้าไม่เหมือนกัน การ์ดจะคว่ำลงอัตโนมัติ</li>
+                    <li>จับคู่ให้ครบทั้ง <strong>8 คู่</strong> เพื่อรับเซอร์ไพรส์!</li>
                 </ul>
             </div>
         </section>
@@ -239,6 +168,7 @@
         let firstCard = null; 
         let secondCard = null; 
         let lock = false;
+        let matchedPairs = 0;
 
         const board = document.getElementById("board");
 
@@ -247,14 +177,14 @@
             firstCard = null; 
             secondCard = null; 
             lock = false;
+            matchedPairs = 0;
             
-            // ผสมการ์ด 8 คู่ (16 ใบ)
             cards = [...symbols, ...symbols].sort(() => 0.5 - Math.random());
             
             cards.forEach(symbol => {
                 const card = document.createElement("div");
                 card.classList.add("card");
-                card.dataset.symbol = symbol; // เก็บค่าไว้เทียบ
+                card.dataset.symbol = symbol;
                 card.innerText = "?";
                 card.addEventListener("click", () => flipCard(card));
                 board.appendChild(card);
@@ -264,8 +194,7 @@
         function flipCard(card) {
             if (lock || card === firstCard || card.classList.contains("matched")) return;
 
-            const symbol = card.dataset.symbol;
-            card.innerText = symbol; 
+            card.innerText = card.dataset.symbol; 
             card.classList.add("flipped");
 
             if (!firstCard) {
@@ -277,27 +206,82 @@
             lock = true; 
 
             if (firstCard.dataset.symbol === secondCard.dataset.symbol) {
-                firstCard.classList.add("matched");
-                secondCard.classList.add("matched");
-                resetTurn();
+                markAsMatched();
             } else {
-                setTimeout(() => {
-                    firstCard.innerText = "?";
-                    secondCard.innerText = "?";
-                    firstCard.classList.remove("flipped");
-                    secondCard.classList.remove("flipped");
-                    resetTurn();
-                }, 600);
+                unflipCards();
             }
         }
 
-        function resetTurn() {
-            firstCard = null;
-            secondCard = null;
-            lock = false;
+        function markAsMatched() {
+            firstCard.classList.add("matched");
+            secondCard.classList.add("matched");
+            matchedPairs++;
+            
+            // ตรวจสอบว่าชนะหรือยัง
+            if (matchedPairs === symbols.length) {
+                launchCelebration();
+            }
+            
+            resetTurn();
         }
 
-        // เริ่มเกมทันที
+        function unflipCards() {
+            setTimeout(() => {
+                firstCard.innerText = "?";
+                secondCard.innerText = "?";
+                firstCard.classList.remove("flipped");
+                secondCard.classList.remove("flipped");
+                resetTurn();
+            }, 600);
+        }
+
+        function resetTurn() {
+            [firstCard, secondCard, lock] = [null, null, false];
+        }
+
+        // ฟังก์ชันจุดพลุสุดอลังการ
+        function launchCelebration() {
+            const duration = 5 * 1000;
+            const animationEnd = Date.now() + duration;
+            const defaults = { startVelocity: 30, spread: 360, ticks: 60, zIndex: 0 };
+
+            function randomInRange(min, max) {
+                return Math.random() * (max - min) + min;
+            }
+
+            const interval = setInterval(function() {
+                const timeLeft = animationEnd - Date.now();
+
+                if (timeLeft <= 0) {
+                    return clearInterval(interval);
+                }
+
+                const particleCount = 50 * (timeLeft / duration);
+                
+                // พลุจากซ้ายและขวา
+                confetti(Object.assign({}, defaults, { 
+                    particleCount, 
+                    origin: { x: randomInRange(0.1, 0.3), y: Math.random() - 0.2 },
+                    colors: ['#D81B60', '#FFB6C1', '#FFFFFF']
+                }));
+                confetti(Object.assign({}, defaults, { 
+                    particleCount, 
+                    origin: { x: randomInRange(0.7, 0.9), y: Math.random() - 0.2 },
+                    colors: ['#D81B60', '#FFB6C1', '#FFFFFF']
+                }));
+            }, 250);
+
+            // พลุระเบิดตรงกลางลูกใหญ่
+            setTimeout(() => {
+                confetti({
+                    particleCount: 150,
+                    spread: 70,
+                    origin: { y: 0.6 },
+                    colors: ['#D81B60', '#FF69B4', '#FFC0CB']
+                });
+            }, 500);
+        }
+
         initGame();
     </script>
 </body>
