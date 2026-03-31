@@ -8,7 +8,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Sarabun:wght@400;700&display=swap" rel="stylesheet">
 
     <style>
-        /* --- 1. BASE STYLES (Progressive Enhancement) --- */
+        /* --- 1. BASE STYLES --- */
         :root {
             --primary-pink: #D81B60;
             --soft-pink: #FFF0F5;
@@ -31,7 +31,7 @@
             -webkit-font-smoothing: antialiased;
         }
 
-        /* --- 2. NAVIGATION (ปรับปรุงส่วนที่หายไปให้ Responsive) --- */
+        /* --- 2. NAVIGATION (Responsive Optimized) --- */
         .navbar {
             position: fixed;
             top: 0; width: 100%; height: 60px;
@@ -159,10 +159,12 @@
 
         .back-btn:hover { background: #AD1457; transform: scale(1.05); }
 
+        /* การปรับแต่งสำหรับมือถือจอเล็กพิเศษ */
         @media (max-width: 400px) {
             .logo { font-size: 0.9rem; }
             .menu { gap: 8px; }
             .profile-header { padding: 30px 15px; }
+            .nav-content { padding: 0 10px; }
         }
     </style>
 </head>
@@ -173,6 +175,7 @@
             <a href="index.html" class="logo">PANYA</a>
             <div class="menu">
                 <a href="index.html">Home</a>
+                <a href="index.html#about">About</a>
                 <a href="app.html">App</a>
                 <a href="about.html">Full CV</a>
             </div>
