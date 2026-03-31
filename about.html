@@ -8,7 +8,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Sarabun:wght@400;700&display=swap" rel="stylesheet">
 
     <style>
-        /* --- 1. BASE STYLES --- */
+        /* --- 1. BASE STYLES: กำหนดชุดสีหลัก (Palette) เพื่อความเป็นเอกภาพของแบรนด์บุคคล --- */
         :root {
             --primary-pink: #D81B60;
             --soft-pink: #FFF0F5;
@@ -31,12 +31,12 @@
             -webkit-font-smoothing: antialiased;
         }
 
-        /* --- 2. NAVIGATION (Responsive Optimized) --- */
+        /* --- 2. NAVIGATION: เมนูแบบ Sticky ที่รองรับการปัด (Scroll) บนมือถือจอเล็ก --- */
         .navbar {
             position: fixed;
             top: 0; width: 100%; height: 60px;
             background: rgba(255, 255, 255, 0.98);
-            backdrop-filter: blur(10px);
+            backdrop-filter: blur(10px); /* เอฟเฟกต์กระจกฝ้าเพิ่มความหรูหรา */
             display: flex; justify-content: center;
             z-index: 1000;
             border-bottom: 1px solid rgba(216, 27, 96, 0.1);
@@ -64,7 +64,7 @@
             -webkit-overflow-scrolling: touch;
         }
 
-        /* ซ่อน Scrollbar */
+        /* ซ่อน Scrollbar ของเมนูเพื่อความสะอาดตา */
         .menu::-webkit-scrollbar { display: none; }
 
         .menu a {
@@ -74,7 +74,7 @@
         }
         .menu a:hover { color: var(--primary-pink); }
 
-        /* --- 3. CV LAYOUT --- */
+        /* --- 3. CV LAYOUT: การจัดวางการ์ดข้อมูลให้น่าอ่านและมีการตอบสนอง (Hover Effect) --- */
         .cv-container {
             max-width: 850px;
             margin: 20px auto;
@@ -117,7 +117,7 @@
             border-radius: 25px;
             padding: 25px;
             margin-bottom: 20px;
-            border-left: 6px solid var(--primary-pink);
+            border-left: 6px solid var(--primary-pink); /* เส้นคั่นฝั่งซ้ายเพื่อเน้นความสำคัญ */
             box-shadow: 0 5px 15px var(--shadow);
             transition: transform 0.3s ease;
         }
@@ -159,7 +159,7 @@
 
         .back-btn:hover { background: #AD1457; transform: scale(1.05); }
 
-        /* การปรับแต่งสำหรับมือถือจอเล็กพิเศษ */
+        /* Media Queries สำหรับหน้าจอขนาดเล็กพิเศษ */
         @media (max-width: 400px) {
             .logo { font-size: 0.9rem; }
             .menu { gap: 8px; }
@@ -204,12 +204,12 @@
                 <p class="info-desc">สถาบันเทคโนโลยีพระจอมเกล้าเจ้าคุณทหารลาดกระบัง</p>
                 <p class="date-location">2023 - Present</p>
             </div>
-            <div>
+            <div style="margin-bottom: 15px;">
                 <p class="info-title">มัธยมศึกษาตอนปลาย</p>
                 <p class="info-desc">โรงเรียนหมอนทองวิทยา</p>
                 <p class="date-location">2021 - 2023</p>
             </div>
-            <div>
+            <div style="margin-bottom: 15px;">
                 <p class="info-title">มัธยมศึกษาตอนต้น</p>
                 <p class="info-desc">โรงเรียนวัดคลอง 18</p>
                 <p class="date-location">2018 - 2021</p>
