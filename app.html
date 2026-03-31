@@ -1,288 +1,172 @@
-<!DOCTYPE html>
-<html lang="th">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Memory Game | Panya Pink Edition</title>
-    
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Sarabun:wght@200;400;700&display=swap" rel="stylesheet">
-    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+<style>
+    /* --- NEW GAME: ZOMBIE CLICKER --- */
+    .game-container {
+        max-width: 600px;
+        margin: 20px auto;
+        position: relative;
+        background: #2c3e50; /* พื้นหลังมืดให้เข้ากับบรรยากาศซอมบี้ */
+        height: 400px;
+        border-radius: 20px;
+        overflow: hidden;
+        border: 4px solid #D81B60;
+        cursor: crosshair;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+    }
 
-    <style>
-        /* --- 1. RESET & SETUP --- */
-        * { margin: 0; padding: 0; box-sizing: border-box; }
+    .game-stats {
+        display: flex;
+        justify-content: space-around;
+        padding: 10px;
+        background: rgba(255, 255, 255, 0.9);
+        font-weight: 700;
+        color: #D81B60;
+        border-bottom: 2px solid #FFB6C1;
+    }
+
+    .zombie {
+        width: 60px;
+        height: 60px;
+        position: absolute;
+        font-size: 50px;
+        user-select: none;
+        transition: transform 0.1s;
+        cursor: pointer;
+        filter: drop-shadow(2px 4px 6px rgba(0,0,0,0.3));
+    }
+
+    .zombie:active { transform: scale(0.8); }
+
+    .hit-effect {
+        position: absolute;
+        color: #ff0000;
+        font-weight: bold;
+        pointer-events: none;
+        animation: floatUp 0.5s ease-out forwards;
+    }
+
+    @keyframes floatUp {
+        0% { opacity: 1; transform: translateY(0); }
+        100% { opacity: 0; transform: translateY(-50px); }
+    }
+
+    /* ปรับแต่งกติกาใหม่ */
+    .rules-container li::before { content: '🧟'; }
+</style>
+
+<section class="header-section">
+    <h1 class="gradient-title">Zombie Pink Hunter</h1>
+    <p class="subtitle">กำจัดซอมบี้ที่บุกโลกสีชมพู!</p>
+
+    <div class="rules-container">
+        <h3>กติกาการเล่น</h3>
+        <ul>
+            <li>คลิกที่ตัวซอมบี้ 🧟 เพื่อกำจัดและรับคะแนน</li>
+            <li>ระวัง! อย่าปล่อยให้ซอมบี้หายไปเอง คะแนนจะลด</li>
+            <li>ทำคะแนนให้ได้มากที่สุดภายในเวลา 30 วินาที</li>
+            <li>กดปุ่มด้านล่างเพื่อเริ่มล่าซอมบี้!</li>
+        </ul>
+    </div>
+</section>
+
+<div class="game-container" id="game-area">
+    <div class="game-stats">
+        <span>คะแนน: <span id="score">0</span></span>
+        <span>เวลา: <span id="timer">30</span> วิ</span>
+    </div>
+    </div>
+
+<button class="btn-reset" id="start-btn" onclick="startGame()">เริ่มล่าซอมบี้!</button>
+
+<script>
+    let score = 0;
+    let timeLeft = 30;
+    let gameActive = false;
+    let spawnInterval;
+    let countdownInterval;
+
+    const gameArea = document.getElementById('game-area');
+    const scoreElement = document.getElementById('score');
+    const timerElement = document.getElementById('timer');
+    const startBtn = document.getElementById('start-btn');
+
+    function startGame() {
+        if (gameActive) return;
         
-        body {
-            font-family: 'Inter', 'Sarabun', sans-serif;
-            background-color: #FFF0F5;
-            color: #4A3A3F;
-            padding-top: 100px;
-            line-height: 1.6;
-            overflow-x: hidden;
-        }
-
-        /* --- 2. NAVBAR --- */
-        .navbar {
-            position: fixed;
-            top: 0; width: 100%; height: 70px;
-            display: flex; justify-content: center; z-index: 1000;
-            background: rgba(255, 255, 255, 0.95); 
-            backdrop-filter: blur(15px);
-            border-bottom: 1px solid rgba(216, 27, 96, 0.1);
-            box-shadow: 0 2px 15px rgba(0, 0, 0, 0.05);
-        }
-
-        .nav-content {
-            width: 100%; max-width: 1200px;
-            display: flex; justify-content: space-between; align-items: center;
-            padding: 0 40px;
-        }
-
-        .logo {
-            font-size: 20px; font-weight: 700; letter-spacing: 3px;
-            text-decoration: none; color: #D81B60; text-transform: uppercase;
-        }
-
-        .menu { display: flex; gap: 40px; }
-        .menu a {
-            text-decoration: none; color: rgba(216, 27, 96, 0.8);
-            font-size: 13px; text-transform: uppercase; letter-spacing: 1.5px;
-            font-weight: 600; transition: 0.3s;
-        }
-        .menu a:hover { color: #D81B60; }
-
-        /* --- 3. HEADER --- */
-        .header-section { text-align: center; margin-bottom: 40px; padding: 0 20px; }
-        .gradient-title { font-size: clamp(32px, 5vw, 48px); font-weight: 700; margin-bottom: 10px; color: #D81B60; }
-        .subtitle { font-size: 14px; text-transform: uppercase; letter-spacing: 5px; color: #8C747A; margin-bottom: 25px; }
-
-        .rules-container {
-            max-width: 500px; margin: 0 auto;
-            background: rgba(255, 255, 255, 0.7); padding: 25px;
-            border-radius: 20px; border: 1px solid #FFB6C1;
-            text-align: left; box-shadow: 0 5px 15px rgba(216, 27, 96, 0.05);
-        }
-
-        .rules-container h3 {
-            color: #D81B60; font-size: 16px; margin-bottom: 12px;
-            text-transform: uppercase; border-bottom: 2px solid #FFF0F5;
-            padding-bottom: 5px; display: inline-block;
-        }
-        .rules-container ul { list-style: none; }
-        .rules-container li { font-size: 14px; color: #614E54; margin-bottom: 8px; position: relative; padding-left: 25px; }
-        .rules-container li::before { content: '❤'; position: absolute; left: 0; color: #D81B60; }
-
-        /* --- 4. GAME BOARD --- */
-        .game-board {
-            display: grid; grid-template-columns: repeat(4, 85px);
-            gap: 15px; justify-content: center; margin: 40px auto;
-        }
+        // Reset stats
+        score = 0;
+        timeLeft = 30;
+        gameActive = true;
+        scoreElement.innerText = score;
+        timerElement.innerText = timeLeft;
+        startBtn.style.display = 'none';
         
-        .card {
-            width: 85px; height: 85px; background: #ffffff;
-            color: #000; font-size: 32px; display: flex;
-            align-items: center; justify-content: center;
-            border-radius: 12px; cursor: pointer;
-            transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); 
-            border: 1px solid #FFB6C1;
-            box-shadow: 0 4px 10px rgba(216, 27, 96, 0.1);
-            user-select: none;
-            perspective: 1000px;
-        }
+        // Start Loops
+        spawnInterval = setInterval(spawnZombie, 800);
+        countdownInterval = setInterval(updateTimer, 1000);
+    }
 
-        .card:hover { transform: scale(1.05); border-color: #D81B60; }
+    function spawnZombie() {
+        if (!gameActive) return;
 
-        .card.flipped { 
-            background: #D81B60; color: #fff; 
-            transform: rotateY(180deg); 
-        }
+        const zombie = document.createElement('div');
+        zombie.className = 'zombie';
+        zombie.innerText = '🧟';
         
-        .card.matched { 
-            background: #FFC0CB; /* เปลี่ยนเป็นชมพูหวานเมื่อคู่กัน */
-            color: #D81B60;
-            opacity: 0.8; border-color: #D81B60;
-            cursor: default; transform: scale(0.95);
-            animation: pulse 1s infinite;
-        }
+        // สุ่มตำแหน่ง
+        const maxX = gameArea.clientWidth - 60;
+        const maxY = gameArea.clientHeight - 100;
+        zombie.style.left = Math.random() * maxX + 'px';
+        zombie.style.top = (Math.random() * maxY + 40) + 'px';
 
-        @keyframes pulse {
-            0% { transform: scale(0.95); }
-            50% { transform: scale(1); }
-            100% { transform: scale(0.95); }
-        }
+        zombie.onclick = (e) => {
+            if (!gameActive) return;
+            score += 10;
+            scoreElement.innerText = score;
+            createHitEffect(e.pageX, e.pageY);
+            zombie.remove();
+        };
 
-        .btn-reset {
-            display: block; margin: 0 auto 80px auto;
-            background: #D81B60; color: #fff; border: none; 
-            padding: 15px 40px; text-transform: uppercase; 
-            letter-spacing: 2px; font-size: 13px; 
-            border-radius: 30px; cursor: pointer; 
-            transition: 0.3s; font-weight: 700;
-            box-shadow: 0 5px 15px rgba(216, 27, 96, 0.3);
-        }
+        gameArea.appendChild(zombie);
 
-        .btn-reset:hover { background: #AD1457; transform: translateY(-3px); }
-
-        @media (max-width: 450px) {
-            .game-board { grid-template-columns: repeat(4, 70px); gap: 10px; }
-            .card { width: 70px; height: 70px; }
-        }
-    </style>
-</head>
-<body>
-
-    <nav class="navbar">
-        <div class="nav-content">
-            <a href="#" class="logo">PANYA</a>
-            <div class="menu">
-                <a href="#">Home</a>
-                <a href="#">App</a>
-            </div>
-        </div>
-    </nav>
-
-    <main>
-        <section class="header-section">
-            <h1 class="gradient-title">Memory Matching</h1>
-            <p class="subtitle">ฝึกสมองกับผลไม้ในธีมชมพู</p>
-
-            <div class="rules-container">
-                <h3>กติกาการเล่น</h3>
-                <ul>
-                    <li>คลิกที่การ์ดเพื่อเปิดดูผลไม้ด้านใน</li>
-                    <li>จับคู่การ์ดที่มีรูปเหมือนกันให้ครบทุกคู่</li>
-                    <li>ถ้าไม่เหมือนกัน การ์ดจะคว่ำลงอัตโนมัติ</li>
-                    <li>จับคู่ให้ครบทั้ง <strong>8 คู่</strong> เพื่อรับเซอร์ไพรส์!</li>
-                </ul>
-            </div>
-        </section>
-
-        <div class="game-board" id="board"></div>
-
-        <button class="btn-reset" onclick="initGame()">เริ่มเกมใหม่ / สุ่มการ์ด</button>
-    </main>
-
-    <script>
-        const symbols = ["🍎","🍌","🍇","🍒","🍉","🍍","🥝","🍓"];
-        let cards = []; 
-        let firstCard = null; 
-        let secondCard = null; 
-        let lock = false;
-        let matchedPairs = 0;
-
-        const board = document.getElementById("board");
-
-        function initGame() {
-            board.innerHTML = ""; 
-            firstCard = null; 
-            secondCard = null; 
-            lock = false;
-            matchedPairs = 0;
-            
-            cards = [...symbols, ...symbols].sort(() => 0.5 - Math.random());
-            
-            cards.forEach(symbol => {
-                const card = document.createElement("div");
-                card.classList.add("card");
-                card.dataset.symbol = symbol;
-                card.innerText = "?";
-                card.addEventListener("click", () => flipCard(card));
-                board.appendChild(card);
-            });
-        }
-
-        function flipCard(card) {
-            if (lock || card === firstCard || card.classList.contains("matched")) return;
-
-            card.innerText = card.dataset.symbol; 
-            card.classList.add("flipped");
-
-            if (!firstCard) {
-                firstCard = card;
-                return;
-            }
-
-            secondCard = card;
-            lock = true; 
-
-            if (firstCard.dataset.symbol === secondCard.dataset.symbol) {
-                markAsMatched();
-            } else {
-                unflipCards();
-            }
-        }
-
-        function markAsMatched() {
-            firstCard.classList.add("matched");
-            secondCard.classList.add("matched");
-            matchedPairs++;
-            
-            // ตรวจสอบว่าชนะหรือยัง
-            if (matchedPairs === symbols.length) {
-                launchCelebration();
-            }
-            
-            resetTurn();
-        }
-
-        function unflipCards() {
-            setTimeout(() => {
-                firstCard.innerText = "?";
-                secondCard.innerText = "?";
-                firstCard.classList.remove("flipped");
-                secondCard.classList.remove("flipped");
-                resetTurn();
-            }, 600);
-        }
-
-        function resetTurn() {
-            [firstCard, secondCard, lock] = [null, null, false];
-        }
-
-        // ฟังก์ชันจุดพลุสุดอลังการ
-        function launchCelebration() {
-            const duration = 5 * 1000;
-            const animationEnd = Date.now() + duration;
-            const defaults = { startVelocity: 30, spread: 360, ticks: 60, zIndex: 0 };
-
-            function randomInRange(min, max) {
-                return Math.random() * (max - min) + min;
-            }
-
-            const interval = setInterval(function() {
-                const timeLeft = animationEnd - Date.now();
-
-                if (timeLeft <= 0) {
-                    return clearInterval(interval);
+        // ซอมบี้หายไปเองถ้าไม่กดภายใน 1.5 วิ
+        setTimeout(() => {
+            if (zombie.parentElement) {
+                zombie.remove();
+                if (gameActive) {
+                    score = Math.max(0, score - 5);
+                    scoreElement.innerText = score;
                 }
+            }
+        }, 1500);
+    }
 
-                const particleCount = 50 * (timeLeft / duration);
-                
-                // พลุจากซ้ายและขวา
-                confetti(Object.assign({}, defaults, { 
-                    particleCount, 
-                    origin: { x: randomInRange(0.1, 0.3), y: Math.random() - 0.2 },
-                    colors: ['#D81B60', '#FFB6C1', '#FFFFFF']
-                }));
-                confetti(Object.assign({}, defaults, { 
-                    particleCount, 
-                    origin: { x: randomInRange(0.7, 0.9), y: Math.random() - 0.2 },
-                    colors: ['#D81B60', '#FFB6C1', '#FFFFFF']
-                }));
-            }, 250);
+    function createHitEffect(x, y) {
+        const effect = document.createElement('div');
+        effect.className = 'hit-effect';
+        effect.innerText = '+10';
+        effect.style.left = (x - 20) + 'px';
+        effect.style.top = (y - 100) + 'px';
+        document.body.appendChild(effect);
+        setTimeout(() => effect.remove(), 500);
+    }
 
-            // พลุระเบิดตรงกลางลูกใหญ่
-            setTimeout(() => {
-                confetti({
-                    particleCount: 150,
-                    spread: 70,
-                    origin: { y: 0.6 },
-                    colors: ['#D81B60', '#FF69B4', '#FFC0CB']
-                });
-            }, 500);
-        }
+    function updateTimer() {
+        timeLeft--;
+        timerElement.innerText = timeLeft;
+        if (timeLeft <= 0) endGame();
+    }
 
-        initGame();
-    </script>
-</body>
-</html>
+    function endGame() {
+        gameActive = false;
+        clearInterval(spawnInterval);
+        clearInterval(countdownInterval);
+        
+        // ล้างซอมบี้ที่ค้างอยู่
+        const zombies = document.querySelectorAll('.zombie');
+        zombies.forEach(z => z.remove());
+
+        alert('จบเกม! คุณทำคะแนนได้: ' + score + ' คะแนน');
+        startBtn.style.display = 'block';
+        startBtn.innerText = 'เล่นอีกครั้ง';
+    }
+</script>
