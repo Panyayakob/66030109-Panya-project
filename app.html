@@ -5,183 +5,202 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Zombie Hunter | Panya Pink Edition</title>
     
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Sarabun:wght@200;400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Sarabun:wght@400;700&display=swap" rel="stylesheet">
 
     <style>
-        /* --- 1. SETUP & SMOOTH SCROLL --- */
-        html { scroll-behavior: smooth; }
+        /* --- 1. BASE STYLES (Progressive Enhancement) --- */
+        :root {
+            --primary-pink: #D81B60;
+            --soft-pink: #FFF0F5;
+            --accent-pink: #FFB6C1;
+            --dark-text: #4A3A3F;
+            --game-bg: #232d37;
+        }
+
         * { margin: 0; padding: 0; box-sizing: border-box; }
 
+        html { scroll-behavior: smooth; }
+
         body {
-            font-family: 'Inter', 'Sarabun', sans-serif;
-            background: #FFF0F5;
-            color: #4A3A3F;
+            font-family: 'Sarabun', 'Inter', sans-serif;
+            background: var(--soft-pink);
+            color: var(--dark-text);
             line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
             overflow-x: hidden;
         }
 
-        /* --- 2. NAVBAR --- */
+        /* --- 2. NAVIGATION --- */
         .navbar {
             position: fixed;
-            top: 0; width: 100%; height: 70px;
-            display: flex; justify-content: center; z-index: 1000;
-            background: rgba(255, 255, 255, 0.95); 
-            backdrop-filter: blur(15px);
+            top: 0; width: 100%; height: 60px;
+            background: rgba(255, 255, 255, 0.98);
+            backdrop-filter: blur(10px);
+            display: flex; justify-content: center;
+            z-index: 1000;
             border-bottom: 1px solid rgba(216, 27, 96, 0.1);
-            box-shadow: 0 2px 15px rgba(0, 0, 0, 0.05);
         }
 
         .nav-content {
             width: 100%; max-width: 1200px;
-            display: flex; justify-content: space-between; align-items: center;
-            padding: 0 40px;
+            display: flex; justify-content: space-between;
+            align-items: center; padding: 0 20px;
         }
 
         .logo {
-            font-size: 20px; font-weight: 700; letter-spacing: 3px;
-            text-decoration: none; color: #D81B60; text-transform: uppercase;
+            font-size: 1.2rem; font-weight: 700;
+            text-decoration: none; color: var(--primary-pink);
+            letter-spacing: 2px;
         }
 
-        .menu { display: flex; gap: 40px; }
+        .menu { display: flex; gap: 15px; }
         .menu a {
-            text-decoration: none; color: rgba(216, 27, 96, 0.8);
-            font-size: 13px; text-transform: uppercase; letter-spacing: 1.5px;
-            font-weight: 600; transition: 0.3s;
+            text-decoration: none; color: var(--dark-text);
+            font-size: 0.75rem; font-weight: 600;
+            text-transform: uppercase; transition: 0.3s;
         }
-        .menu a:hover { color: #D81B60; }
+        .menu a:hover { color: var(--primary-pink); }
 
-        /* --- 3. HEADER & RULES --- */
-        .header-section { text-align: center; margin: 100px auto 30px auto; padding: 0 20px; }
-        .gradient-title { font-size: clamp(32px, 5vw, 48px); font-weight: 700; color: #D81B60; margin-bottom: 10px; }
-        .subtitle { font-size: 16px; text-transform: uppercase; letter-spacing: 3px; color: #8C747A; margin-bottom: 30px; }
+        /* --- 3. HEADER SECTION --- */
+        .header-section { 
+            padding: 100px 20px 40px; 
+            text-align: center; 
+            background: linear-gradient(135deg, var(--primary-pink) 0%, #AD1457 100%);
+            color: #fff;
+        }
+
+        .header-section h1 {
+            font-size: clamp(2.5rem, 8vw, 4rem);
+            line-height: 1.2; margin-bottom: 10px;
+            text-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+
+        .subtitle {
+            font-size: 0.9rem; letter-spacing: 4px;
+            color: var(--accent-pink); text-transform: uppercase;
+        }
+
+        /* --- 4. GAME CONTENT & RULES --- */
+        .game-wrapper { max-width: 900px; margin: -30px auto 40px; padding: 0 20px; }
 
         .rules-container {
-            max-width: 600px; margin: 0 auto;
-            background: #ffffff; padding: 30px;
-            border-radius: 25px; border: 2px solid #FFB6C1;
-            text-align: left; box-shadow: 0 10px 25px rgba(216, 27, 96, 0.08);
+            background: #fff; padding: 25px;
+            border-radius: 20px; margin-bottom: 30px;
+            box-shadow: 0 10px 30px rgba(216, 27, 96, 0.1);
+            border-left: 5px solid var(--primary-pink);
         }
 
-        .rules-container h3 {
-            color: #D81B60; font-size: 18px; margin-bottom: 15px;
-            text-transform: uppercase; border-bottom: 3px solid #FFF0F5;
-            padding-bottom: 8px; display: inline-block;
-        }
-        .rules-container ul { list-style: none; }
-        .rules-container li { font-size: 15px; color: #614E54; margin-bottom: 10px; position: relative; padding-left: 35px; }
-        .rules-container li::before { content: '🧟'; position: absolute; left: 0; font-size: 18px; }
+        .rules-container h3 { color: var(--primary-pink); margin-bottom: 10px; }
+        .rules-container ul { list-style: none; font-size: 0.95rem; }
+        .rules-container li { margin-bottom: 5px; position: relative; padding-left: 30px; }
+        .rules-container li::before { content: '🌸'; position: absolute; left: 0; }
 
-        /* --- 4. ENHANCED GAME COMPONENT --- */
-        .game-wrapper { margin: 40px auto; max-width: 900px; padding: 0 20px; }
-
+        /* --- 5. ENHANCED GAME AREA --- */
         .game-container {
             position: relative;
-            background: #232d37; /* สีมืดตัดกับโทนชมพูเพื่อให้เห็นซอมบี้ชัดเจน */
-            height: 500px; /* ขยายความสูง */
-            border-radius: 30px;
+            background: var(--game-bg);
+            height: 500px;
+            border-radius: 25px;
             overflow: hidden;
-            border: 8px solid #D81B60;
+            border: 6px solid #fff;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.2);
             cursor: crosshair;
-            box-shadow: 0 20px 50px rgba(216, 27, 96, 0.2);
         }
 
         .game-stats {
             display: flex; justify-content: space-around;
-            padding: 15px; background: #ffffff;
-            font-size: 22px; font-weight: 800; color: #D81B60;
-            border-bottom: 4px solid #FFB6C1;
+            padding: 15px; background: #fff;
+            font-size: 1.2rem; font-weight: 700; color: var(--primary-pink);
         }
-
-        .stat-item { display: flex; align-items: center; gap: 10px; }
 
         .zombie {
-            width: 80px; height: 80px; position: absolute;
-            font-size: 60px; user-select: none;
-            transition: transform 0.15s cubic-bezier(0.175, 0.885, 0.32, 1.275); 
-            cursor: pointer;
-            filter: drop-shadow(0 5px 10px rgba(0,0,0,0.5));
+            width: 70px; height: 70px; position: absolute;
+            font-size: 50px; user-select: none;
+            transition: transform 0.1s ease;
             display: flex; align-items: center; justify-content: center;
+            filter: drop-shadow(0 5px 10px rgba(0,0,0,0.3));
         }
 
-        .zombie:hover { transform: scale(1.1); }
-        .zombie:active { transform: scale(0.9); }
-
         .hit-effect {
-            position: absolute; color: #FF1493; font-weight: 900;
+            position: absolute; color: var(--accent-pink); font-weight: 900;
             pointer-events: none; animation: floatUp 0.7s ease-out forwards;
-            font-size: 24px; text-shadow: 2px 2px 0 #fff, -1px -1px 0 #fff;
+            font-size: 1.5rem; text-shadow: 2px 2px 0 var(--primary-pink);
             z-index: 100;
         }
 
         @keyframes floatUp {
-            0% { opacity: 1; transform: translateY(0) scale(1); }
-            100% { opacity: 0; transform: translateY(-80px) scale(1.5); }
+            0% { opacity: 1; transform: translateY(0); }
+            100% { opacity: 0; transform: translateY(-100px); }
         }
 
-        .btn-reset {
-            display: block; margin: 0 auto 100px auto;
-            background: linear-gradient(135deg, #D81B60 0%, #AD1457 100%);
-            color: #fff; border: none; 
-            padding: 18px 50px; text-transform: uppercase; 
-            letter-spacing: 3px; font-size: 16px; 
-            border-radius: 50px; cursor: pointer; 
-            transition: 0.4s; font-weight: 700;
-            box-shadow: 0 8px 20px rgba(216, 27, 96, 0.4);
+        /* --- 6. BUTTONS & FOOTER --- */
+        .btn-start {
+            display: block; margin: 30px auto;
+            background: var(--primary-pink); color: #fff;
+            border: none; padding: 15px 40px;
+            border-radius: 50px; font-weight: 700; font-size: 1.1rem;
+            cursor: pointer; transition: 0.3s;
+            box-shadow: 0 10px 20px rgba(216, 27, 96, 0.3);
         }
+        .btn-start:hover { transform: translateY(-3px); box-shadow: 0 15px 25px rgba(216, 27, 96, 0.4); }
 
-        .btn-reset:hover { 
-            transform: translateY(-5px) scale(1.05); 
-            box-shadow: 0 12px 30px rgba(216, 27, 96, 0.5);
+        footer {
+            padding: 40px 20px; text-align: center;
+            background: #fff; font-size: 0.8rem; opacity: 0.8;
         }
 
         @media (max-width: 768px) {
             .game-container { height: 400px; }
-            .nav-content { padding: 0 20px; }
             .menu { display: none; }
         }
     </style>
 </head>
 <body>
 
-    <nav class="navbar">
-        <div class="nav-content">
-            <a href="index.html" class="logo">PANYA</a>
-            <div class="menu">
-                <a href="index.html">Home</a>
-                <a href="#about">About</a> 
-                <a href="app.html">App</a>
-                <a href="about.html">Full CV</a>
+    <header role="banner">
+        <nav class="navbar">
+            <div class="nav-content">
+                <a href="index.html" class="logo">PANYA</a>
+                <div class="menu">
+                    <a href="index.html">Home</a>
+                    <a href="#about">About</a> 
+                    <a href="app.html">App</a>
+                    <a href="about.html">Full CV</a>
+                </div>
             </div>
-        </div>
-    </nav>
+        </nav>
+    </header>
 
     <main>
         <section class="header-section">
-            <h1 class="gradient-title">Zombie Pink Hunter</h1>
-            <p class="subtitle">กำจัดซอมบี้ที่บุกโลกสีชมพู!</p>
-
-            <div class="rules-container">
-                <h3>กติกาการเล่น</h3>
-                <ul>
-                    <li>คลิกที่ซอมบี้ 🧟 เพื่อกำจัด (ได้รับ +10 คะแนน)</li>
-                    <li>หากปล่อยให้ซอมบี้หายไปเอง (เสีย -5 คะแนน)</li>
-                    <li>ทำคะแนนให้สูงที่สุดภายในเวลา <strong>30 วินาที</strong></li>
-                    <li>เป้าหมายคือทำความสะอาดโลกสีชมพูให้ปลอดภัย!</li>
-                </ul>
-            </div>
+            <p class="subtitle">Mini Game Challenge</p>
+            <h1>Zombie Pink Hunter</h1>
         </section>
 
         <div class="game-wrapper">
+            <div class="rules-container">
+                <h3>กติกาการเล่น</h3>
+                <ul>
+                    <li>แตะที่ซอมบี้ 🧟 เพื่อกำจัด (+10 คะแนน)</li>
+                    <li>หากปล่อยหลุดไป (-5 คะแนน)</li>
+                    <li>เวลาจำกัด 30 วินาที</li>
+                </ul>
+            </div>
+
             <div class="game-container" id="game-area">
                 <div class="game-stats">
-                    <div class="stat-item">🏆 คะแนน: <span id="score">0</span></div>
-                    <div class="stat-item">⏱️ เวลา: <span id="timer">30</span> วิ</div>
+                    <div>SCORE: <span id="score">0</span></div>
+                    <div>TIME: <span id="timer">30</span>s</div>
                 </div>
             </div>
-        </div>
 
-        <button class="btn-reset" id="start-btn" onclick="startGame()">เริ่มล่าซอมบี้เลย!</button>
+            <button class="btn-start" id="start-btn" onclick="startGame()">เริ่มกำจัดซอมบี้!</button>
+        </div>
     </main>
+
+    <footer>
+        <p>&copy; 2026 Panya Portfolio. <br>Designed with Pink Passion.</p>
+    </footer>
 
     <script>
         let score = 0;
@@ -198,19 +217,15 @@
         function startGame() {
             if (gameActive) return;
             
-            // Reset Game
             score = 0;
             timeLeft = 30;
             gameActive = true;
             scoreElement.innerText = score;
             timerElement.innerText = timeLeft;
             
-            // UI Update
             startBtn.style.visibility = 'hidden';
-            gameArea.style.borderColor = '#FF1493';
             
-            // Intervals
-            spawnInterval = setInterval(spawnZombie, 700); // ปรับให้เกิดเร็วขึ้นนิดหน่อยเพื่อความสนุก
+            spawnInterval = setInterval(spawnZombie, 750);
             countdownInterval = setInterval(updateTimer, 1000);
         }
 
@@ -221,9 +236,8 @@
             zombie.className = 'zombie';
             zombie.innerText = '🧟';
             
-            // คำนวณตำแหน่ง (หักลบขนาดตัวและส่วนสถิติด้านบน)
-            const maxX = gameArea.clientWidth - 90;
-            const maxY = gameArea.clientHeight - 140;
+            const maxX = gameArea.clientWidth - 80;
+            const maxY = gameArea.clientHeight - 130;
             zombie.style.left = Math.random() * maxX + 'px';
             zombie.style.top = (Math.random() * maxY + 60) + 'px';
 
@@ -237,7 +251,6 @@
 
             gameArea.appendChild(zombie);
 
-            // หายไปเองใน 1.2 วินาที
             setTimeout(() => {
                 if (zombie.parentElement) {
                     zombie.remove();
@@ -254,7 +267,7 @@
             effect.className = 'hit-effect';
             effect.innerText = '+10';
             effect.style.left = (x - 20) + 'px';
-            effect.style.top = (y - 40) + 'px';
+            effect.style.top = (y - 50) + 'px';
             effect.style.position = 'fixed';
             document.body.appendChild(effect);
             setTimeout(() => effect.remove(), 700);
@@ -271,15 +284,13 @@
             clearInterval(spawnInterval);
             clearInterval(countdownInterval);
             
-            // Clear remaining zombies
             const zombies = document.querySelectorAll('.zombie');
             zombies.forEach(z => z.remove());
 
-            alert('⏰ หมดเวลา! \nคุณทำคะแนนได้: ' + score + ' คะแนน');
+            alert('⏰ จบเกม!\nคะแนนของคุณคือ: ' + score);
             
             startBtn.style.visibility = 'visible';
-            startBtn.innerText = 'ท้าทายอีกครั้ง!';
-            gameArea.style.borderColor = '#D81B60';
+            startBtn.innerText = 'เล่นอีกครั้ง';
         }
     </script>
 </body>
